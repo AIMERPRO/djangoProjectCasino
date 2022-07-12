@@ -1,0 +1,411 @@
+{% extends "top4/base.html" %}
+{% load thumbnail %}
+{% load easy_thumbnails_tags %}
+
+{% block title %}
+    {% if top.text %}
+        {{ top.text }}
+        {% else %}
+        Best Оnlinе Саsinоs
+    {% endif %} — {% now "F Y" %}
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block header %}
+  <header class="header" style="background-image: url(/media/img/header/back.png)">
+    <div class="header__container container">
+      <div class="row">
+       <div class="header__body d-flex align-items-center justify-content-between">
+        <div class="header__wrapper-logo col-3">
+          <a class="header__logo" href="index.html">
+            <picture><source srcset="{% if top.top4_header %} {{ top.top4_header.url }} {% else %} /media/img/header/logo.webp {% endif %}" type="image/webp">
+                <img src="{% if top.top4_header %} {{ top.top4_header.url }} {% else %} /media/img/header/logo.webp {% endif %}" alt="Logo">
+            </picture>
+          </a>
+        </div>
+        <div class="header__wrapper-title col-8 col-sm-5">
+          <h1 class="header__title d-flex flex-column align-items-end align-items-xl-start">
+            {%  if top.header %}
+              {{ top.header }}
+              {% else %}
+              Top best online casinos
+              {% endif %}
+{#            <span>casinos</span>#}
+          </h1>
+        </div>
+       </div>
+    {% if casino_list.0.0 and not casino_list.0.1.logo %}
+               <div class="header__cart header-cart">
+                 <div class="row">
+                   <div class="header-cart__top d-flex align-items-center justify-content-between">
+                    <div class="header-cart__left d-flex flex-column align-items-center col-6 col-sm-4">
+                        {% if casino_list.0.0.badge %}
+                          <div class="header-cart__tranding d-flex justify-content-center" style="background-color: {{ casino_list.0.0.badge.color_HEX }};">
+                            {{ casino_list.0.0.badge.text }}
+                          </div>
+                        {% endif %}
+                      <div class="header-cart__wrapper-logo">
+                        <a class="header-cart__logo" href="{{ casino_list.0.0.url }}" target="_blank">
+                          <picture><source srcset="{{ casino_list.0.0.logo.url }}"type="image/webp"><img src="{{ casino_list.0.0.logo.url }}" alt="Vegas"></picture>
+                        </a>
+                      </div>
+                     </div>
+                     <div class="header-cart__middle d-flex flex-column align-items-center col-5 col-sm-4 col-lg-3">
+                      <h4 class="header-cart__title">
+                          {% if top.tr_bonus %}
+                            {{ top.tr_bonus }}
+                          {% else %}
+                              Welcome Bonus
+                          {% endif %}
+                      </h4>
+                      <div class="header-cart__bns d-flex justify-content-between justify-content-sm-center col-12">
+                        <div class="header-cart__bonus d-flex flex-column align-items-center col-5">
+                          <div class="header-cart__bonus-icon">
+                            <svg width="38" height="38">
+                            <use xlink:href="/media/img/svg/sprites.svg#bonus_320"></use>
+                            </svg>
+                          </div>
+                          <p class="header-cart__bonus-text">
+                            {{ casino_list.0.0.limit }} {{ top.country.currency.symbol }}
+                          </p>
+                        </div>
+                        <div class="header-cart__plus d-flex justify-content-center align-items-end col-1">
+                          +
+                        </div>
+                        <div class="header-cart__spin d-flex flex-column align-items-center col-5">
+                          <div class="header-cart__spin-icon">
+                            <svg width="38" height="38">
+                            <use xlink:href="/media/img/svg/sprites.svg#spin_320"></use>
+                            </svg>
+                          </div>
+                          <p class="header-cart__spin-text">
+                            {{ casino_list.0.0.fs }} fs
+                          </p>
+                        </div>
+                      </div>
+                     </div>
+                     <div class="header-cart__get-bonus col-6 col-sm-4 col-md-3" data-da=".header-cart__bottom, 575, 1">
+                      <a class="header-cart__get d-flex align-items-center justify-content-center" href="{{ casino_list.0.0.url }}" target="_blank">
+                          {% if top.tr_play %}
+                            {{ top.tr_play }}
+                          {% else %}
+                              Get a bonus
+                          {% endif %}
+                      </a>
+                     </div>
+                   </div>
+                   <div class="header-cart__bottom d-flex justify-content-center d-sm-none"></div>
+                 </div>
+               </div>
+              </div>
+            </div>
+    {% else %}
+               <div class="header__cart header-cart">
+                 <div class="row">
+                   <div class="header-cart__top d-flex align-items-center justify-content-between">
+                    <div class="header-cart__left d-flex flex-column align-items-center col-6 col-sm-4">
+                        {% if casino_list.0.1.badge %}
+                          <div class="header-cart__tranding d-flex justify-content-center" style="background-color: {{ casino_list.0.1.badge.color_HEX }};">
+                            {{ casino_list.0.1.badge.text }}
+                          </div>
+                        {% endif %}
+                      <div class="header-cart__wrapper-logo">
+                        <a class="header-cart__logo" href="{{ casino_list.0.1.url }}" target="_blank">
+                          <picture><source srcset="{{ casino_list.0.1.logo.url }}"type="image/webp"><img src="{{ casino_list.0.1.logo.url }}" alt="Vegas"></picture>
+                        </a>
+                      </div>
+                     </div>
+                     <div class="header-cart__middle d-flex flex-column align-items-center col-5 col-sm-4 col-lg-3">
+                      <h4 class="header-cart__title">
+                          {% if top.tr_bonus %}
+                            {{ top.tr_bonus }}
+                          {% else %}
+                              Welcome Bonus
+                          {% endif %}
+                      </h4>
+                      <div class="header-cart__bns d-flex justify-content-between justify-content-sm-center col-12">
+                        <div class="header-cart__bonus d-flex flex-column align-items-center col-5">
+                          <div class="header-cart__bonus-icon">
+                            <svg width="38" height="38">
+                            <use xlink:href="/media/img/svg/sprites.svg#bonus_320"></use>
+                            </svg>
+                          </div>
+                          <p class="header-cart__bonus-text">
+                            {{ casino_list.0.1.limit }} {{ top.country.currency.symbol }}
+                          </p>
+                        </div>
+                        <div class="header-cart__plus d-flex justify-content-center align-items-end col-1">
+                          +
+                        </div>
+                        <div class="header-cart__spin d-flex flex-column align-items-center col-5">
+                          <div class="header-cart__spin-icon">
+                            <svg width="38" height="38">
+                            <use xlink:href="/media/img/svg/sprites.svg#spin_320"></use>
+                            </svg>
+                          </div>
+                          <p class="header-cart__spin-text">
+                            {{ casino_list.0.1.fs }} fs
+                          </p>
+                        </div>
+                      </div>
+                     </div>
+                     <div class="header-cart__get-bonus col-6 col-sm-4 col-md-3" data-da=".header-cart__bottom, 575, 1">
+                      <a class="header-cart__get d-flex align-items-center justify-content-center" href="{{ casino_list.0.1.url }}" target="_blank">
+                          {% if top.tr_play %}
+                            {{ top.tr_play }}
+                          {% else %}
+                              Get a bonus
+                          {% endif %}
+                      </a>
+                     </div>
+                   </div>
+                   <div class="header-cart__bottom d-flex justify-content-center d-sm-none"></div>
+                 </div>
+               </div>
+              </div>
+            </div>
+    {%  endif %}
+        <div class="header__bottom-line">
+      <picture><source srcset="/media/img/header/bottom-line.webp"type="image/webp"><img src="/media/img/header/bottom-line.png" alt="Bottom line"></picture>
+     </div>
+  </header>
+{% endblock %}
+
+{% block content %}
+    {% for casino in casino_list %}
+        {% if casino.1 %}
+            <li class="carts__item d-flex " >
+                <div class="carts__item-left col-6 col-sm-4 col-md-3 col-lg-4">
+                    {% if casino.0.badge %}
+                      <div class="carts__tranding d-flex justify-content-center" style="background-color: {{ casino.0.badge.color_HEX }};">
+                        {{ casino.0.badge.text }}
+                      </div>
+                    {% endif %}
+                  <div class="carts__wrapper-logo">
+                    <a class="carts__logo" href="{{ casino.1.url }}" target="_blank">
+                      <picture><source srcset="{{ casino.0.logo.url }}"type="image/webp"><img src="{{ casino.0.logo.url }}" alt="Vulkan"></picture>
+                    </a>
+                  </div>
+                  <div class="carts__rating d-flex align-items-center">
+                    <span class="carts__rating-star">
+                      <picture><source srcset="/media/img/cart/star.webp"type="image/webp"><img src="/media/img/cart/star.png" alt="Star"></picture>
+                    </span>
+                    <span class="carts__rating-star">
+                      <picture><source srcset="/media/img/cart/star.webp"type="image/webp"><img src="/media/img/cart/star.png" alt="Star"></picture>
+                    </span>
+                    <span class="carts__rating-star">
+                      <picture><source srcset="/media/img/cart/star.webp"type="image/webp"><img src="/media/img/cart/star.png" alt="Star"></picture>
+                    </span>
+                    <span class="carts__rating-star">
+                      <picture><source srcset="/media/img/cart/star.webp"type="image/webp"><img src="/media/img/cart/star.png" alt="Star"></picture>
+                    </span>
+                    <span class="carts__rating-star carts__rating-star_active">
+                      <picture><source srcset="/media/img/cart/star-active.webp"type="image/webp"><img src="/media/img/cart/star-active.png" alt="Star"></picture>
+                    </span>
+                    <span class="carts__rating-text">
+                      9.5
+                    </span>
+                  </div>
+                  <p class="carts__text">
+                    {{ casino.1.adv1 }}
+                    {{ casino.1.adv2 }}
+                    {{ casino.1.adv3 }}
+                  </p>
+                </div>
+                <div class="carts__item-middle col-4 col-md-6 col-lg-4 col-xxl-5 d-flex flex-column align-items-center">
+                  <strong class="carts__strong">
+                    Payment systems
+                  </strong>
+                  <ul class="carts__pays d-flex col-11 col-xl-10 justify-content-center flex-wrap">
+                      {% for payment in casino.2 %}
+                          <li class="carts__pay">
+                              <a class="carts__pay-link carts__pay-link_paysafecard" href="{{ casino.1.url }}" target="_blank">
+                                <picture><source srcset="{{ payment.payment.logo.lazy_logo_mini.url }}"type="image/webp"><img src="{{ payment.payment.logo.lazy_logo_mini.url }}" alt="paysafecard"></picture>
+                              </a>
+                          </li>
+                      {% endfor %}
+                  </ul>
+                </div>
+                <div class="carts__item-right col-4 col-sm-3 col-md-2 col-lg-3 col-xxl-2">
+                 <div class="carts__wrapper-bonus">
+                  <strong class="carts__welcome-bonus d-flex justify-content-center">
+                          {% if top.tr_bonus %}
+                            {{ top.tr_bonus }}
+                          {% else %}
+                              Welcome Bonus
+                          {% endif %}
+                  </strong>
+                  <div class="carts__bonus d-flex align-items-center">
+                    <span class="carts__bonus-text col-1">Bonus</span>
+                    <div class="carts__bonus-icon col-4 col-sm-6">
+                      <svg class="carts__svg-bonus" width="68" height="68">
+                      <use xlink:href="/media/img/svg/sprites.svg#bonus"></use>
+                      </svg>
+                      <svg class="carts__svg-bonus carts__svg-bonus_320" width="38" height="38">
+                      <use xlink:href="/media/img/svg/sprites.svg#bonus_320"></use>
+                      </svg>
+                    </div>
+                    <p class="carts__price col-5">
+                      {{ casino.1.limit }} {{ top.country.currency.symbol }}
+                    </p>
+                  </div>
+                  <div class="carts__plus">
+                    <p class="carts__plus-text">
+                      +
+                    </p>
+                  </div>
+                  <div class="carts__spin d-flex align-items-center">
+                    <span class="carts__spin-text col-1">
+                    Free spin
+                    </span>
+                    <div class="carts__spin-icon col-4 col-sm-6">
+                      <svg class="carts__svg-spin" width="60" height="60">
+                      <use xlink:href="/media/img/svg/sprites.svg#spin"></use>
+                      </svg>
+                      <svg class="carts__svg-spin carts__svg-spin_320" width="38" height="38">
+                      <use xlink:href="/media/img/svg/sprites.svg#spin_320"></use>
+                      </svg>
+                    </div>
+                    <p class="carts__spin-fs col-5">
+                      {{ casino.1.fs }} fs
+                    </p>
+                  </div>
+                 </div>
+                </div>
+                <div class="carts__get col-2 col-sm-1">
+                  <a href="{{ casino.1.url }}" class="carts__get-link">
+                    <span>
+                          {% if top.tr_play %}
+                            {{ top.tr_play }}
+                          {% else %}
+                              Get a bonus
+                          {% endif %}
+                    </span>
+                  </a>
+                </div>
+              </li>
+        {% else %}
+            <li class="carts__item d-flex " >
+                <div class="carts__item-left col-6 col-sm-4 col-md-3 col-lg-4">
+                    {% if casino.0.badge %}
+                      <div class="carts__tranding d-flex justify-content-center" style="background-color: {{ casino.1.badge.color_HEX }};">
+                        {{ casino.0.badge.text }}
+                      </div>
+                    {% endif %}
+                  <div class="carts__wrapper-logo">
+                    <a class="carts__logo" href="{{ casino.1.url }}" target="_blank">
+                      <picture><source srcset="{{ casino.0.logo.url }}"type="image/webp"><img src="{{ casino.0.logo.url }}" alt="Vulkan"></picture>
+                    </a>
+                  </div>
+                  <div class="carts__rating d-flex align-items-center">
+                    <span class="carts__rating-star">
+                      <picture><source srcset="/media/img/cart/star.webp"type="image/webp"><img src="/media/img/cart/star.png" alt="Star"></picture>
+                    </span>
+                    <span class="carts__rating-star">
+                      <picture><source srcset="/media/img/cart/star.webp"type="image/webp"><img src="/media/img/cart/star.png" alt="Star"></picture>
+                    </span>
+                    <span class="carts__rating-star">
+                      <picture><source srcset="/media/img/cart/star.webp"type="image/webp"><img src="/media/img/cart/star.png" alt="Star"></picture>
+                    </span>
+                    <span class="carts__rating-star">
+                      <picture><source srcset="/media/img/cart/star.webp"type="image/webp"><img src="/media/img/cart/star.png" alt="Star"></picture>
+                    </span>
+                    <span class="carts__rating-star carts__rating-star_active">
+                      <picture><source srcset="/media/img/cart/star-active.webp"type="image/webp"><img src="/media/img/cart/star-active.png" alt="Star"></picture>
+                    </span>
+                    <span class="carts__rating-text">
+                      9.5
+                    </span>
+                  </div>
+                  <p class="carts__text">
+                    {{ casino.0.adv1 }}
+                    {{ casino.0.adv2 }}
+                    {{ casino.0.adv3 }}
+                  </p>
+                </div>
+                <div class="carts__item-middle col-4 col-md-6 col-lg-4 col-xxl-5 d-flex flex-column align-items-center">
+                  <strong class="carts__strong">
+                    Payment systems
+                  </strong>
+                  <ul class="carts__pays d-flex col-11 col-xl-10 justify-content-center flex-wrap">
+                      {% for payment in casino.2 %}
+                          <li class="carts__pay">
+                              <a class="carts__pay-link carts__pay-link_paysafecard" href="{{ casino.0.url }}" target="_blank">
+                                <picture><source srcset="{{ payment.payment.logo.lazy_logo_mini.url }}"type="image/webp"><img src="{{ payment.payment.logo.lazy_logo_mini.url }}" alt="paysafecard"></picture>
+                              </a>
+                          </li>
+                      {% endfor %}
+                  </ul>
+                </div>
+                <div class="carts__item-right col-4 col-sm-3 col-md-2 col-lg-3 col-xxl-2">
+                 <div class="carts__wrapper-bonus">
+                  <strong class="carts__welcome-bonus d-flex justify-content-center">
+                          {% if top.tr_bonus %}
+                            {{ top.tr_bonus }}
+                          {% else %}
+                              Welcome Bonus
+                          {% endif %}
+                  </strong>
+                  <div class="carts__bonus d-flex align-items-center">
+                    <span class="carts__bonus-text col-1">Bonus</span>
+                    <div class="carts__bonus-icon col-4 col-sm-6">
+                      <svg class="carts__svg-bonus" width="68" height="68">
+                      <use xlink:href="/media/img/svg/sprites.svg#bonus"></use>
+                      </svg>
+                      <svg class="carts__svg-bonus carts__svg-bonus_320" width="38" height="38">
+                      <use xlink:href="/media/img/svg/sprites.svg#bonus_320"></use>
+                      </svg>
+                    </div>
+                    <p class="carts__price col-5">
+                      {{ casino.0.limit }} {{ top.country.currency.symbol }}
+                    </p>
+                  </div>
+                  <div class="carts__plus">
+                    <p class="carts__plus-text">
+                      +
+                    </p>
+                  </div>
+                  <div class="carts__spin d-flex align-items-center">
+                    <span class="carts__spin-text col-1">
+                    Free spin
+                    </span>
+                    <div class="carts__spin-icon col-4 col-sm-6">
+                      <svg class="carts__svg-spin" width="60" height="60">
+                      <use xlink:href="/media/img/svg/sprites.svg#spin"></use>
+                      </svg>
+                      <svg class="carts__svg-spin carts__svg-spin_320" width="38" height="38">
+                      <use xlink:href="/media/img/svg/sprites.svg#spin_320"></use>
+                      </svg>
+                    </div>
+                    <p class="carts__spin-fs col-5">
+                      {{ casino.0.fs }} fs
+                    </p>
+                  </div>
+                 </div>
+                </div>
+                <div class="carts__get col-2 col-sm-1">
+                  <a href="{{ casino.0.url }}" class="carts__get-link">
+                          {% if top.tr_play %}
+                            {{ top.tr_play }}
+                          {% else %}
+                              Get a bonus
+                          {% endif %}
+                  </a>
+                </div>
+              </li>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block footer %}
+
+    <script>
+    </script>
+{% endblock %}
+
+{% if top.tr_copy %}
+    {{ top.tr_copy }}
+{% else %}
+{% endif %}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}Top admin {% endblock %}</title>
+	<link rel="short icon" href="/media/topadmin/favicon.ico">
+	<link rel="stylesheet" href="/media/topadmin/fonts/stylesheet.css">
+	<link rel="stylesheet" href="/media/topadmin/styles/jquery-ui.css">
+	<link rel="stylesheet" href="/media/topadmin/styles/bootstrap.min.css">
+	<link href="/media/topadmin/styles/widgets.css" type="text/css" media="all" rel="stylesheet">
+	<script src="/media/topadmin/js/core.js"></script>
+	<script src="/media/topadmin/js/jsi18n.js"></script>
+	<script src="/media/topadmin/js/SelectBox.js"></script>
+	<script src="/media/topadmin/js/SelectFilter2.js"></script>
+	
+	<link rel="stylesheet" href="/media/topadmin/styles/styles.css">
+	<style>
+	
+	</style>
+</head>
+
+<body>
+	
+		
+		<nav class="navbar fixed-top navbar-expand-lg navbar-light">
+			<div class="container-fluid">
+				
+				<a class="navbar-brand" href="#">
+					<img src="/media/topadmin/img/crown.png" alt="">
+				</a>
+				<div class="navbar-text">
+					<h3 class="m-0 p-0">{{user.username}}</h3>
+					<p class="m-0 p-0">
+						{% for source in user.profile.permission.all %}
+							{% if forloop.counter != 1 %}
+								 | 
+							{% endif %}
+							{{source.name}}
+						{% endfor %}
+					</p>	
+				</div>
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link"  href="{% url 'topadmin' %}">Топы</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'casinoadmin' %}">Казино</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link  dropdown-toggle" href="#" id="navbarDropdown-geo" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Гео
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown-geo">
+	            <li><a class="dropdown-item" target="_blanc" href="/top/currencyadmin/">Валюта</a></li>
+	            <li><a class="dropdown-item" target="_blanc" href="/top/countryadmin/">Страны</a></li>
+          	</ul>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link  dropdown-toggle" href="#" id="navbarDropdown-casino" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Доп. настройки
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown-casino">
+	            <li><a class="dropdown-item" target="_blanc" href="/top/paymentadmin/">Платежки</a></li>
+	            <li><a class="dropdown-item" target="_blanc" href="/top/provideradmin/">Провайдеры</a></li>
+	            <li><a class="dropdown-item" target="_blanc" href="/top/badgeadmin/">Повязки казино</a></li>
+	            <li><hr class="dropdown-divider"></li>
+	            <li><a class="dropdown-item" target="_blanc" href="/admin/decor/theme/">Темы</a></li>
+	            <li><hr class="dropdown-divider"></li>
+	            <li><a class="dropdown-item" target="_blanc" href="/admin/postbacks/postback/">Постбэки</a></li>
+	            <li><a class="dropdown-item" target="_blanc" href="/admin/postbacks/partner/">Партнеры</a></li>
+          	</ul>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<main>
+			<div class="container">
+				{% block content %}
+
+				{% endblock %}
+			</div>
+		</main>
+		
+
+	
+	<script src="/media/topadmin/js/jquery-3.6.0.js"></script>
+    <script src="/static/colorfield/jscolor/jscolor.js"></script>
+	<script src="/media/topadmin/js/jquery-ui.js"></script>
+	<script src="/media/topadmin/js/bootstrap.min.js"></script>
+	<script src="/media/topadmin/js/main.js"></script>
+	{% block scripts %}
+
+	{% endblock %}
+</body>
+
+</html>

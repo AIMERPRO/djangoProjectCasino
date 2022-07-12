@@ -1,0 +1,80 @@
+{% extends './base.html' %}
+{% block title %}ВАЛЮТА{% endblock %}
+{% block content %}
+<div class="row ">
+	<div class="col-12">
+		<div class="section-head d-flex align-items-center justify-content-center">
+			<h2>Currencies</h2>
+			<a href="{% url 'currency_edit' slug='new'  %}" class="btn-circle btn-head" target="_blanc">
+				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+					 viewBox="0 0 297 297" style="enable-background:new 0 0 297 297;" xml:space="preserve">
+					<g>
+						<path d="M294.061,101.395c-1.851-1.849-4.359-2.887-6.976-2.887l-88.617,0.012l0.013-88.655c0-2.617-1.038-5.126-2.888-6.977
+							C193.742,1.038,191.233,0,188.616,0l-80.188,0.012c-5.445,0.002-9.859,4.415-9.86,9.86l-0.016,88.662L9.926,98.548
+							c-5.446,0-9.86,4.415-9.861,9.86L0.051,188.63c0,2.618,1.038,5.126,2.889,6.977c1.85,1.85,4.359,2.888,6.976,2.888l88.621-0.012
+							l-0.014,88.653c0,2.617,1.04,5.126,2.889,6.977c1.851,1.85,4.36,2.89,6.977,2.888l80.187-0.016c5.445,0,9.859-4.415,9.86-9.86
+							l0.014-88.658l88.629-0.016c5.445,0,9.859-4.415,9.86-9.86l0.012-80.22C296.949,105.754,295.911,103.246,294.061,101.395z"/>
+					</g>
+				</svg>
+			</a>
+		</div>
+	</div>
+	{% for currency in currencies %}
+	<div class="col-12 col-md-6 col-lg-4 col-xl-3">
+		<div class="box casino">
+			<div class="d-flex align-items-stretch">
+				{% if currency.logo %}
+				<div class="casino-logo">
+					<img src="{{currency.logo.url}}" alt="">
+				</div>
+				{% endif %}
+				<div class="box-item casino-box-item">
+					<h3>{{currency.name}}</h3>
+				</div>
+			</div>
+			<div class="casino-info">
+				<div class="casino-btnbox">
+					<a class="top-url-eye btn-circle" href="{% url 'currency_edit' slug=currency.id %}" target="_blanc">
+						<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 490.305 490.305" style="enable-background:new 0 0 490.305 490.305;" xml:space="preserve">
+								<g>
+									<path d="M472.469,81.443l-63.6-63.6c-13.1-16.4-53.2-30.2-83.4,0l-290.9,289.9l0,0c-4.4,4.4-6.5,10.1-6.2,15.6l-27.1,141.8
+									c-4.2,16.2,11.9,26.6,22.9,25l147-29.2c4.2,0,7.3-2.1,10.4-5.2l290.9-289.8C495.469,142.943,495.469,104.443,472.469,81.443z
+									 M354.669,46.043c6.3-7.3,18.8-7.3,26.1,0l17.3,17l-289.7,289.7l-30.1-30.4L354.669,46.043z M61.769,364.043l64.4,64.4l-80.1,15.8
+									L61.769,364.043z M444.369,135.643l-276.8,276.8l-30.1-30.4l290-290l16.8,16.5C453.469,118.343,449.169,130.743,444.369,135.643z"
+									/>
+								</g>
+						</svg>
+					</a>
+					<a class="btn-circle btn-delete" href="#delete-{{currency.id}}" data-bs-target="#delete-{{currency.id}}" data-bs-toggle="modal">
+						<svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+						  <path  d="M20 2h-4v-.85C16 .52 15.48 0 14.85 0h-5.7C8.52 0 8 .52 8 1.15V2H4c-1.1 0-2 .9-2 2 0 .74.4 1.38 1 1.73v14.02C3 22.09 4.91 24 7.25 24h9.5c2.34 0 4.25-1.91 4.25-4.25V5.73c.6-.35 1-.99 1-1.73 0-1.1-.9-2-2-2zm-1 17.75c0 1.24-1.01 2.25-2.25 2.25h-9.5C6.01 22 5 20.99 5 19.75V6h14v13.75z"/>
+						  <path  d="M8 20.022c-.553 0-1-.447-1-1v-10c0-.553.447-1 1-1s1 .447 1 1v10c0 .553-.447 1-1 1zm8 0c-.553 0-1-.447-1-1v-10c0-.553.447-1 1-1s1 .447 1 1v10c0 .553-.447 1-1 1zm-4 0c-.553 0-1-.447-1-1v-10c0-.553.447-1 1-1s1 .447 1 1v10c0 .553-.447 1-1 1z"/>
+						</svg>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="delete-{{currency.id}}" style="display: none;" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content position-relative">
+				<button type="button" class="close modal-close" data-bs-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<div class="modal-wrapper about">
+					<p>Точно удалить валюту {{currency.name}}?</p>
+					<div class="btn-box">
+						<a class="btn" href="{% url 'currency_delete' slug=currency.id %}">Удалить</a>
+						<button type="button" class="close  btn" data-bs-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">Отмена</span>
+						</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock %}

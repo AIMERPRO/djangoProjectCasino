@@ -1,0 +1,574 @@
+{% load pwa %}
+<!doctype html>
+<html lang="{% block lang %}en{% endblock %}">
+<head>
+	<meta charset="utf-8">
+
+	<title>{% if top.header %}{{ top.header }}{% else %} BEST TOP{% endif %}</title>
+	<link rel="preload" as="image" href="{{ top.bg_img.bg_mob.url }}">
+	
+	<meta name="description" content="{{ top.header }}">
+
+	<link rel="shortcut icon" href="/media/betting/favicons/favicon.ico" type="image/x-icon">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	{% if top.font_link %}{{ top.font_link|safe }}{% endif %}
+	<link rel="stylesheet" href="/media/betting/css/fonts.css">
+	<link rel="stylesheet" href="/media/betting/css/bootstrap.min.css">
+	
+	{% progressive_web_app_meta %}
+	
+	<style type="text/css">
+		body input:focus:required:invalid,
+		body textarea:focus:required:invalid {
+			
+		}
+		body input:required:valid,
+		body textarea:required:valid {
+			
+		}
+
+		html.js .loader {
+			background: none repeat scroll 0 0 #ffffff;
+			bottom: 0;
+			height: 100%;
+			left: 0;
+			position: fixed;
+			right: 0;
+			top: 0;
+			width: 100%;
+			z-index: 9999;
+		}
+		html.js .loader_inner {
+			background-image: url("../img/preloader.gif");
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-color: #fff;
+			height: 60px;
+			width: 60px;
+			margin-top: -30px;
+			margin-left: -30px;
+			left: 50%;
+			top: 50%;
+			position: absolute;
+		}
+		
+		{% block style %}
+		body {
+			background: #210d2a url('/media/betting/img/bgnd.jpg') top center fixed !important;
+		}
+		header {
+			background: #030926d6;
+			border-bottom: 1px solid #a100fb94;
+		}
+		.block-wrapper {
+			border: 1px solid #fb00f780;
+			background: #1d0c24c4;
+			box-shadow: 0 0 5px #be4bc84d;
+		}
+		.title {
+			color: #be4bc8;
+		}
+		.light {
+			text-shadow: 1px 1px 5px #be4bc83d, -1px -1px 5px #be4bc83d, 1px -1px 5px #be4bc83d, -1px 1px 5px #be4bc83d;
+		}
+		.light-box {
+			box-shadow: 1px 1px 5px #be4bc83d, -1px -1px 5px #be4bc83d, 1px -1px 5px #be4bc83d, -1px 1px 5px #be4bc83d;
+		}		
+		.icons .data .mindep {
+			color: #be4bc8;
+		}
+		.icons .data .license {
+			color: #be4bc8;
+		}
+		.play-button {
+			border: 1px solid #d5a707;
+			color: #be4bc8 !important;
+			text-shadow: 1px 1px 3px #be4bc83d, -1px -1px 3px #be4bc83d, 1px -1px 3px #be4bc83d, -1px 1px 3px #be4bc83d;
+			box-shadow: 1px 1px 3px #be4bc83d, -1px -1px 3px #be4bc83d, 1px -1px 3px #be4bc83d, -1px 1px 3px #be4bc83d;
+		}
+		.play-button:hover {
+			border: 1px solid #be4bc8 !important;
+			text-shadow: 1px 1px 5px #be4bc83d, -1px -1px 5px #be4bc83d, 1px -1px 5px #be4bc83d, -1px 1px 5px #be4bc83d;
+			box-shadow: 1px 1px 5px #be4bc83d, -1px -1px 5px #be4bc83d, 1px -1px 5px #be4bc83d, -1px 1px 5px #be4bc83d;
+		}		
+		.bottom-block {
+			background: #030926d6;
+			border-top: 1px solid #a100fb94;
+		}
+		{% endblock %}
+		
+		body {
+			font-family: sans-serif;
+			font-size: 16px;
+			min-width: 320px;
+			position: relative;
+			line-height: 1.6;
+			font-family: "RobotoRegular", sans-serif !important;
+			font-display: auto;
+			overflow-x: hidden !important;
+			background-size: cover !important;
+			color: #ffffff !important;
+		}
+		h1, .h1 {
+			margin: 0 !important;
+		}
+		a {
+			color: #fff000 !important;
+			text-decoration: none !important;
+		}
+		footer {
+			background: #000000c4;
+			padding: 15px 0;
+		}
+		.full-width {
+			max-width: 100%;
+		}
+		.header {
+			height: 84px;
+			padding: 10px 0 !important;
+		}
+		.header .head-logo img {
+			height: 64px;
+			width: 160px;
+		}
+		.header .country-header {
+			font-size: 20px;
+			color: #ffc312;
+			text-align: center;
+			padding-top: 15px;
+		}
+		.block-wrapper {
+			width: 100%;
+			margin: 20px auto 0px;
+			padding: 15px 0;
+			border-radius: 7px;
+			position: relative;
+		}
+		.badge-wrapper {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			top: -9px;
+			left: -10px;
+            z-index: 999;
+		}
+		.badge-wrapper .badge-bg {
+			width: 100%;
+			display: block;
+		}
+		.badge-wrapper .badge-text {
+			position: absolute;
+			top: 17px;
+			left: -19px;
+			transform: rotate(-43deg);
+			font-size: 16px;
+			font-weight: bold;
+			min-width: 100px;
+			text-align: center;
+			text-shadow: 1px 1px 0 #0009;
+		}
+		.block-padding {
+			padding: 0 15px !important;
+		}
+		.hidden {
+			display: none;
+		}
+		.head-icon {
+			text-align: right;
+			padding-top: 10px;
+		}
+		.head-icon .trust img {
+			width: 24px;
+			margin-left: 10px;
+		}
+		.head-icon .trust span {
+			color: #ffffff;
+		}
+		.head-icon .fast img {
+			width: 24px;
+			margin-left: 10px;
+		}		
+		.head-icon .fast span {
+			color: #ffffff;
+		}
+		.head-awards {
+			font-size: 12px;
+			color: #ffffff;
+		}
+		.content {
+			margin-top: 10px;
+		}
+		.logo {
+			min-height: 96px;
+			/*background: #00000080;*/
+			border-radius: 5px;
+			display: flex;
+            position: relative;
+			align-items: center;
+			justify-content: center;
+            flex-direction: column;
+  		    justify-content: space-between;
+		}
+		.logo .logo-link {
+			min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 100%;
+            width: 100%;
+		}
+		.logo .logo-link .logo-img {
+			display: block;
+			position: relative;
+			left: 0;
+			width: 120%;
+            /*max-width: 100%;*/
+            /*padding: 10px 5px;*/
+		}
+        .ld-icons-desktop {
+            display: none;
+            min-height: 120px;
+		    text-align: center;
+        }
+		.p-logos {
+			position: relative;
+			text-align: center !important;
+			margin-top:  5px;
+		}
+		.p-logos .data {
+			position: relative;
+			overflow: hidden;
+			height: 50px;
+			white-space: nowrap;
+			margin: 0 15px;
+		}
+		.p-logos ul {
+			display: block;
+			margin: 0 auto;
+		}
+		.p-logos ul li {
+			display: inline-block;
+			list-style: none;
+		}
+		.p-logos img {
+			max-width: 48px;
+		}
+
+		.license img {
+			max-width: 32px;
+		}
+		.block-logo {
+			text-align: center;
+		}
+        .pay1, .pay2 {
+            position: absolute;
+            width: 48px;
+        }
+        .pay1 img, .pay2 img {
+            max-width: 100%;
+        }
+        .pay1 {
+            top: -12px;
+            right: -12px;
+        }
+        .pay2 {
+            bottom: 42px;
+            right: -12px;
+        }
+		.star {
+			margin: 0;
+			width: 100px;
+		}
+		.rating-text {
+			font-size: 10px;
+		}
+		.block-body {
+			text-align: right;
+		}
+		.block-info {
+			display: none;
+		}
+		.block-info .data ul {
+			text-align: center;
+			font-size: 14px;
+			list-style: none;
+			padding-left: 15px;
+		}
+		.fs {
+			text-align: center;
+		}
+		.fs .data a {
+			display: inline-block;
+			color:  #ffffffc4 !important;
+		}
+		.fs .data img {
+			width: 24px;
+			margin-top: -10px;
+		}
+		.fs .data h3 {
+			font-weight: bold;
+			white-space: nowrap;
+		}
+
+		.title {
+			font-size: 12px;
+			margin:  0 auto 5px;
+			text-align: center;
+            white-space: nowrap;
+		}
+
+		.promo {
+			text-align: center;
+		}
+		.promo .data a {
+			display: inline-block;
+			color:  #ffffffc4 !important;
+		}
+		.promo .data img {
+			width: 24px;
+			margin-top: -10px;
+		}
+		.promo .data h3 {
+			font-weight: bold;
+			white-space: nowrap;
+		}
+		.cashback {
+			text-align: center;
+		}
+		.cashback .data a {
+			display: inline-block;
+			color:  #ffffffc4 !important;
+		}
+		.cashback .data img {
+			width: 24px;
+			margin-top: -10px;
+		}
+		.cashback .data h3 {
+			font-weight: bold;
+			white-space: nowrap;
+		}
+		.stars {
+			/*background: #00000080;*/
+            padding: 5px;
+		}
+		.icons .data {
+			font-size: 10px;
+		}
+		.icons .data .mindep {
+			padding: 0 !important;
+		}
+		.icons .data .license {
+			padding: 0 !important;
+		}
+		.icons .data .license span img {
+			width: 28px;
+		}
+		.icons .data .mindep span {
+			font-size: 18px;
+			color: #ffffffc4 !important;
+			font-weight: bold;
+		}
+		.play-button {
+			background: #e7bc1fe0;
+			padding: 10px 30px;
+			border-radius: 7px;
+			margin: 10px 0 0;
+			display: block;
+			text-align: center;
+			font-weight: bold;
+		}
+		.play-button:hover {
+			background: #000000b0 !important;
+		}
+		.bottom-block {
+			padding: 10px 0 0;
+			margin-top: 40px;
+		}
+			
+		img[data-src] {
+			opacity: 0 !important;
+		}
+
+		img[src] {
+			opacity: 1 !important;
+		}
+		.header-img{
+			height: inherit;
+		}
+	</style>
+	
+	<link rel="stylesheet" href="/media/betting/css/main.css">
+	<link rel="stylesheet" href="/media/betting/css/media.css">
+	
+	<script src="/media/betting/js/lazyload.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+			<div class="main-wrapper">
+			
+				<div class="container">
+					{% if top.logo %}
+					<div class="row align-items-center">
+						<div class="header col-12 text-center">
+							<!-- <img class="header-img" src="/media/betting/img/sports-logo.png" alt=""> -->
+							
+							<img class="header-img" src="{{ top.logo.site_logo.url }}" data-src="{{ top.logo.lazy.url }}"alt="logo" />
+							<!-- <div class="row justify-content-between full-width">
+								<div class="head-logo col-6 col-md-3">
+									<img {% if top.logo %}src="{{ top.logo.site_logo.url }}" data-src="{{ top.logo.lazy.url }}" {% else %}src="/media/betting/img/logo.png" data-src="/media/betting/img/logo.png"{% endif %} alt="logo" />
+								</div>
+								{% if country.header %}
+								<div class="country-header col-md-6 d-none d-lg-block">
+									{{ country.header }}
+								</div>
+								{% endif %}
+ 								<div class="head-icon col-6 col-md-3">
+									<div class="trust">
+										<span>{% if country.promo1 %}{{ country.promo1 }}{% else %}100% Secure{% endif %}</span><img src="/media/betting/img/fast.png" alt="100% secure icon" />
+									</div>
+									<div class="fast">
+										<span>{% if country.promo2 %}{{ country.promo2 }}{% else %}Fast Withdrawals{% endif %}</span><img src="/media/betting/img/fast.png" alt="fast withdraw icon" />
+									</div>
+								</div>
+							</div> -->						
+						</div>
+					</div>
+					{% endif %} 
+					<div class="row pt-3">
+						<div class="col-12 d-flex justify-content-around">
+							<div class="trust" style="{{ top.font_name }}">
+								{% if top.header %}
+								
+									{{ top.header }}
+								
+								{% endif %}
+								<!-- <span>{% if top.promo1 %}{{ top.promo1 }}{% else %}100% Secure{% endif %}</span> <span>{% if top.promo2 %}{{ top.promo2 }}{% else %}Fast Withdrawals{% endif %}</span> -->
+							</div>
+							<!-- <div class="fast">
+								
+							</div> -->
+						</div>
+					</div>					
+				</div>
+			</div>
+		</header>
+			
+		<section>				
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="content">
+							{% block content %}
+							{% endblock %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+			
+		<section class="bottom-block">
+			<div class="container">
+				<div class="row justify-content-center providers">
+					<div class="col-lg-10 col-md-11 col-sm-12 col-12 soft">
+						{{ top.tr_bottom|safe }}
+						<!-- <ul>
+						{% for soft in providers %}
+							<li>
+								<a href="{% if country.hide_link %}/go/{{ casino.id }}/{{ gambler_id }}{% else %}{{ casino.link }}{% endif %}">
+									<img class="provider-logo" src="{{ soft.logo.lazy_logo_mini.url }}" data-src="{{ soft.logo.site_logo_mini.url }}" alt="{{ soft.name }}" />
+								</a>
+							</li>
+						{% endfor %}
+						</ul> -->
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<footer>
+			<div class="container">
+				<div class="row justify-content-center footer">
+					<div class="col-lg-12 text-center">
+						<p class="footer__text">© {% now "Y" %} {{top.tr_copy}}</p>
+						<p>
+							{{top.tr_warning}}
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+		
+		{% if top.icon_to_top %}
+		<div id="toTop">
+			<img src="/media/betting/img/top.png" data-src="/media/betting/img/top.png" alt="Go To Top" />
+		</div>
+		{% endif %}
+	</div>
+
+	<!-- JavaScript -->
+<!-- 	<script src="/media/betting/js/bootstrap.min.js"></script> -->
+    
+
+	<script src="/media/betting/libs/modernizr/modernizr.js"></script>
+	<script src="/media/betting/libs/jquery/jquery-1.11.2.min.js"></script>
+	
+	{% if top.icon_to_top %}
+	
+	<script type="text/javascript">
+		$(window).scroll(function() {
+			if ($(this).scrollTop() != 0) {
+				$('#toTop').fadeIn();
+			} else {
+				$('#toTop').fadeOut();
+			}
+		});
+
+		$('#toTop').click(function() {
+			$("body,html").animate({
+				scrollTop:0
+			}, 800);
+		});
+	</script>
+	{% endif %}
+	
+	<noscript>
+		<style>
+			img[data-src] {
+				display: none !important;
+			}
+		</style>
+	</noscript>
+	<script type="text/javascript">
+		let images = document.querySelectorAll("img");
+		lazyload(images);
+		$(document).ready(function () {
+			$("[data-position]").each(function(index, element) {
+				let position = $(element).attr("data-position");
+
+				let rating = 50 - parseInt(position);
+
+				if ((rating < 40) && (rating > 30)){
+				    rating = 35;
+				}
+				else if ((rating < 30) && (rating > 20)){
+				    rating = 25;
+				}
+				else if ((rating < 20) && (rating > 10)){
+				    rating = 15;
+				}
+				$(element).find("img").attr("data-src", ("/media/img/stars/star-" + rating + ".png"));
+				$(element).find(".rating").html(rating/10);
+				$(element).find(".votes").html(Math.floor(rating * getRandomArbitrary(rating, rating*2)));
+			})
+			function getRandomArbitrary(min, max) {
+			  return Math.random() * (max - min) + min;
+			}
+		});
+	</script>
+{% include 'metrika.html' %}
+</body>
+</html>

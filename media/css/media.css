@@ -1,0 +1,248 @@
+/*==========  Desktop First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+	
+	/*Disable Animation on Mobile Devices*/
+	.animated {
+		/*CSS transitions*/
+		-o-transition-property: none !important;
+		-moz-transition-property: none !important;
+		-ms-transition-property: none !important;
+		-webkit-transition-property: none !important;
+		transition-property: none !important;
+		/*CSS transforms*/
+		-o-transform: none !important;
+		-moz-transform: none !important;
+		-ms-transform: none !important;
+		-webkit-transform: none !important;
+		transform: none !important;
+		/*CSS animations*/
+		-webkit-animation: none !important;
+		-moz-animation: none !important;
+		-o-animation: none !important;
+		-ms-animation: none !important;
+		animation: none !important;
+	}
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 380px) {
+	.logo .logo-img {
+		width: 120px;
+		max-width: 100%;
+	}
+	.head-icon img {
+		width: 100px;
+		margin: 10px 0;
+	}
+	.header .head-logo img {
+		/*height: 42px;
+		width: 108px;*/
+		margin-top: 10px;
+	}
+	.slogan {
+		font-size: 16px;
+	}
+	.head-icon {
+		text-align: right;
+		padding-top: 5px;
+	}
+	.head-icon .trust img {
+		width: 18px;
+		margin: 0 0 0 5px;
+	}
+	.head-icon .trust span {
+		font-size: 12px;
+	}
+	.head-icon .fast img {
+		width: 18px;
+		margin: 0 0 0 5px;
+	}		
+	.head-icon .fast span {
+		font-size: 12px;
+	}
+	.rating-text {
+		font-size: 8px;
+	}
+	.star {
+		width: 75px;
+		max-width: 100%;
+	}	
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 420px) {
+	.promo .data a {
+		width: 100%;
+		display: block;
+	}
+	.fs .data a {
+		width: 100%;
+		display: block;
+	}
+	.logo .logo-link .logo-img {
+		width: 150px;
+		max-width: 100%;
+	}
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 380px) and (max-width : 480px) {
+	.logo .logo-link .logo-img {
+		width: 120px;
+		max-width: 100%;
+	}
+	.block-logo .ld-icons {
+		margin: 0;
+	}
+	.star {
+		width: 75px;
+	}
+	.rating-text {
+		font-size: 8px;
+	}
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+	.icons .data .mindep span {
+		font-size: 24px;
+	}
+	.icons .data .license span img {
+		width: 32px;
+	}
+	.star {
+		width: 100px;
+	}
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+	.p-logos ul {
+		width: 100%;
+	}
+	.p-logos .data {
+		overflow: hidden;
+	}
+	.p-logos:before {
+		content: "";
+		display: none;
+	}
+	.p-logos:after {
+		content: "";
+		display: none;
+	}
+	.data ul.anime {
+		-webkit-animation: none;
+		animation: none;
+	}
+	ul.anime:hover {
+		-webkit-animation-play-state: paused;
+		animation-play-state: paused;
+	}
+	.pay1, .pay2 {
+        position: absolute;
+        width: 96px;
+    }
+	.pay1 {
+		top: -20px;
+		left: -20px;
+	}
+	.pay2 {
+		top: -20px;
+		right: -20px;
+	}
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+	.h3, h3 {
+		font-size: 2rem;
+	}
+	.block-info {
+		display: inline;
+	}
+	.logo {
+		min-height: 244px;
+		flex-direction: column;
+  		justify-content: space-between;
+	}
+	.logo .logo-link {
+		min-height: 176px;
+	}
+	.logo .logo-link .logo-img {
+		width: 150px;
+        max-width: 100%;
+	}
+	.block-logo .ld-icons {
+		display: none;
+	}
+	.ld-icons-desktop {
+		display: block;
+	}
+	.ld-icons-desktop .mindep, .ld-icons-desktop .license {
+		font-size: 12px;
+    	text-transform: uppercase;
+	}
+	.ld-icons-desktop .mindep span {
+		font-size: 28px !important;
+	}
+	.ld-icons-desktop .license img {
+		max-width: 48px !important;
+		width: 48px !important;
+	}
+	.stars {
+		margin-top: 10px;
+	}
+	.promo .data img {
+		width: 36px;
+		margin-top: 0;
+		margin-bottom: 10px;
+	}
+	.fs .data img {
+		width: 36px;
+		margin-top: 0;
+		margin-bottom: 10px;
+	}
+	.promo .data a {
+		width: 100%;
+		display: block;
+	}
+	.fs .data a {
+		width: 100%;
+		display: block;
+	}
+
+	.cashback .data img {
+		width: 24px;
+		margin-top: 0;
+		margin-bottom: 10px;
+	}
+
+	.cashback .data a {
+		width: 100%;
+		display: block;
+	}
+	.desk-title {
+		margin-bottom: 12px !important;
+	}
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+	.anime {
+		animation: none;
+	}
+}

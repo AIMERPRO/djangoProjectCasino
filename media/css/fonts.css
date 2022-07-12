@@ -1,0 +1,77 @@
+@font-face {
+	font-family: "RobotoRegular";
+	src: url("../fonts/RobotoRegular/RobotoRegular.eot");
+	src: url("../fonts/RobotoRegular/RobotoRegular.eot?#iefix") format("embedded-opentype"),
+			 url("../fonts/RobotoRegular/RobotoRegular.woff") format("woff"),
+			 url("../fonts/RobotoRegular/RobotoRegular.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+	font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("Inter-Regular"), url("../fonts/Inter/Inter-Regular.woff2") format("woff2"), url("../fonts/Inter/Inter-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "JosefinSans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("JosefinSans-Regular"), url("../fonts/Josefin/JosefinSans-Regular.woff2") format("woff2"), url("../fonts/Josefin/JosefinSans-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "JosefinSans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local("JosefinSans-Bold"), url("../fonts/Josefin/JosefinSans-Bold.woff2") format("woff2"), url("../fonts/Josefin/JosefinSans-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "JejuGothic";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("JejuGothic-Regular"), url("../fonts/JejuGothic/JejuGothic-Regular.woff2") format("woff2"), url("../fonts/JejuGothic/JejuGothic-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "Khula";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("Khula-Regular"), url("../fonts/Khula/Khula-Regular.woff2") format("woff2"), url("../fonts/Khula/Khula-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "Khula";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local("Khula-Bold"), url("../fonts/Khula/Khula-Bold.woff2") format("woff2"), url("../fonts/Khula/Khula-Bold.woff") format("woff");
+}
+@font-face {
+  font-family: "Kanit";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: local("Kanit-ExtraBold"), url("../fonts/Kanit/Kanit-ExtraBold.woff2") format("woff2"), url("../fonts/Kanit/Kanit-ExtraBold.woff") format("woff");
+}
+
+/* @font-face {
+	font-family: "RobotoSlab";
+	src: url("../fonts/RobotoSlab/RobotoSlab-Bold.ttf");
+	src: url("../fonts/RobotoSlab/RobotoSlab-Regular.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "MoonDance";
+	src: url("../fonts/MoonDance/MoonDance-Regular.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+	font-display: swap;
+} */

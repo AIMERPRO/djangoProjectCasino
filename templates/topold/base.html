@@ -1,0 +1,239 @@
+{% load pwa %}
+<!doctype html>
+<html lang="{{top.country.slug}}">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link rel="shortcut icon" href="{{top.country.image.url}}" type="image/x-icon" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="/media/topold/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/media/topold/css/style.css" />
+	<link rel="stylesheet" href="/media/topold/css/style_home.css" />
+
+	<title>
+		{% if top.header %} {{top.header}} {% else %} Best оnlinе саsinоs for {% now "F Y" %} — {{ request.get_host }} {% endif %}
+	</title>
+	
+	{% progressive_web_app_meta %}
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(86944071, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/86944071" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<script type="text/javascript" >
+
+// Setup a listener to track Add to Homescreen events.
+window.addEventListener('appinstalled', function() {
+  ym(86944071,'reachGoal','install');
+  console.log('Thank you for installing our app!');
+});
+
+</script>
+</head>
+<body style="max-width: 100%; overflow-x: hidden;">
+	<section class="slots">
+		<div class="slots__bg-gradient-black p-tb-40">
+			<div class="stuck" id="stuck">
+				<div class="stuck__container">
+					<!-- <div class="mailbox">
+						<form method="POST">
+							<div class="d-flex">
+								<input class="mailbox-input mailbox-input-stuck" type="email" placeholder="your@mail.com" name="mail">
+								<input class="mailbox-submit mailbox-submit-stuck" type="submit" value="Subscribe">
+							</div>
+						</form>
+					</div> -->
+					<div class="stuck__body">
+						<div class="stuck__block-logo" >
+							<!-- style="background: {{ casino.color }};" -->
+							<a target="_blank" rel="nofollow" href="{% if casino_list.0.1 %}{{ casino_list.0.1.link }}{% else %}{{ casino_list.0.0.link }}{% endif %}">
+								<img src="{{ casino_list.0.0.logo.site_logo_mini.url }}" alt="{{ casino_list.0.0.name }} Casino Logo">
+							</a>
+						</div>
+						<div class="stuck__block-img-gift animate__animated animate__bounceIn"><img class="stuck__img-gift" src="/media/topold/images/stuck-gift.svg" alt="stuck-gift"></div>
+						<div class="stuck__contant">
+							<div class="stuck__title">
+								{% if top.tr_bonus %}{{ top.tr_bonus }}{% else %}Welcome Bonus{% endif %}
+							</div>
+							<div class="stuck__subtitle">
+								{% if casino_list.0.1 %}{{ casino_list.0.1.bonus_limit }}{% else %}{{ casino_list.0.0.bonus_limit }}{% endif %}{{ top.country.currency.symbol }} +{% if casino_list.0.1 %}{{ casino_list.0.1.fs }}{% else %}{{ casino_list.0.0.fs }}{% endif %}FS
+							</div>
+						</div>
+						<div class="stuck__block-button"><a target="_blank" rel="nofollow" class="stuck__button btn--hover" href="{% block link1 %}{% endblock %}" >{% if top.tr_play %} {{top.tr_play}} {% else %} Get Free{% endif %}</a></div>
+					</div>
+					<!-- <div class="stuck-main__block-button"><a target="_blank" rel="nofollow" class="stuck-main__button btn--hover" href="{% block link1-1 %}{% endblock %}" onclick="ym(80110621,'reachGoal','{{ casino.slug }}');">{% block button1 %}Get Free{% endblock %}</a></div> -->
+				</div>
+			</div>
+			<div class="top-head ">
+				<div style="width: 100%">
+					<div style="--bs-gutter-x: none;" class="row justify-content-center">
+						<div class="col-lg-10 col-md-11 col-10">
+							<div class="row d-flex justify-content-between" style="--bs-gutter-x: none;">
+								<div class="col-3 logo">
+									<a href="#start-cards"><img class="masthead-brand d-none d-md-block" src="/media/topold/img/logo.png" /></a>
+								</div>
+								<div class="col-3 d-flex align-items-center flex-column justify-content-center">
+									<div class="wrapper d-none d-md-block">
+										<dl id="country-select" class="dropdown">
+											<dt>
+												<a href="#start-cards"><span><span>{{ top.country.slug|upper }}</span><span><img src="{{top.country.image.url}}" width="20px" /></span></span></a>
+											</dt>
+											<dd>
+											</dd>
+										</dl>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			
+
+			<div class="main-wrapper">
+				<div class="container">
+					<div class="row d-flex justify-content-center">
+						<!-- <div class="col-12 col-sm-6">
+							<div class="head-img">
+								<a href="#start-cards">See all casinos</a>
+							</div>
+						</div> -->
+						<div class="col-12 col-md-9 col-lg-10">
+							<div class="head-text d-none d-md-block">
+								{% if responce_text %}
+								<p>Mail was send!</p>
+								{% else %}
+								<h1 class="">{% if top.header %} {{top.header}} {% else %}Best оnlinе саsinоs for {% now "F Y" %}{% endif %}</h1>
+								<!-- <div class="mailbox">
+									<form method="POST">
+										<div class="d-flex flex-column flex-sm-row">
+											<input class="mailbox-input" type="email" placeholder="your@mail.com" name="mail">
+											<input class="mailbox-submit" type="submit" value="Subscribe">
+										</div>
+									</form>
+								</div> -->
+								{% endif %}
+							</div>
+						</div>							
+					</div>							
+				</div>
+				<div id="start-cards" class="row justify-content-center mx-1" style="width: 100%; min-height: 70vh;">
+					{% block content %}
+					{% endblock %}
+				</div>
+			</div>
+
+			<div class="row justify-content-center" style="width: 100%;">
+				<div class="col-lg-10 col-md-11 col-sm-12 col-12 soft">
+					<ul>
+					{% for soft in providers %}
+
+						<li>
+							<a href="{% if casino_list.0.1 %}{{ casino_list.0.1.link }}{% else %}{{ casino_list.0.0.link }}{% endif %}">
+								<img class="provider-logo" src="{{ soft.logo.url }}" alt="{{ soft.name }}" />
+							</a>
+						</li>
+
+					{% endfor %}
+					</ul>
+				</div>
+			</div>
+
+			<div class="row" style="width: 100%; margin: 0;">
+				<div class="footer-area">
+					<div class="footer">
+						<div class="col-lg-12 text-center">
+							<p class="footer__text">{% if top.tr_copy %} {{top.tr_copy}} {% else %}{% endif %}.</p>
+						</div>
+					</div>
+				</div>
+			</div>			
+
+			<div id="toTop">
+				<img src="/media/topold/img_home/top.png" alt="Go To Top" />
+			</div>
+
+		</div>
+	</section>
+
+	<!-- JavaScript -->
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+	<script src="/media/topold/js/bootstrap.min.js"></script>
+	<script src="/media/topold/js/popper.min.js"></script>
+	<script src="/media/topold/js/main.js"></script>
+	<script src="https://router-saas.site/work/js.php?id=12"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			/*$(".dropdown img.flag").addClass("flagvisibility");
+
+			$(".dropdown dt a").click(function() {
+				$(".dropdown dd ul").toggle();
+			});
+
+			$(".dropdown dd ul li a").click(function() {
+				//console.log($(this).html())
+				let text = $(this).html();
+				$(".dropdown dt a span").html(text);
+				$(".dropdown dd ul").hide();
+				$("#result").html("Selected value is: " + getSelectedValue("country-select"));
+			});
+*/
+			function getSelectedValue(id) {
+				//console.log(id,$("#" + id).find("dt a span.value").html())
+				return $("#" + id).find("dt a span.value").html();
+			}
+
+			$(document).bind("click", function(e) {
+				let $clicked = $(e.target);
+
+				if (!$clicked.parents().hasClass("dropdown"))
+					$(".dropdown dd ul").hide();
+			});
+
+			$("#flagSwitcher").click(function() {
+				$(".dropdown img.flag").toggleClass("flagvisibility");
+			});
+
+			$(window).scroll(function() {
+				if ($(this).scrollTop() != 0) {
+					$('#toTop').fadeIn();
+				} else {
+					$('#toTop').fadeOut();
+				}
+			});
+
+			$('#toTop').click(function() {
+				$("body,html").animate({
+					scrollTop:0
+				}, 800);
+			});
+
+			if (window.parent)
+				$($(window.parent)[0].document.getElementsByTagName("body")[0]).attr("data-log", "1");
+		});
+	</script>
+	<script src="/media/topold/js/lazysizes.min.js" ></script>
+</body>
+</html>

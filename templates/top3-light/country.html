@@ -1,0 +1,320 @@
+{% extends "top3/base.html" %}
+{% load thumbnail %}
+{% load easy_thumbnails_tags %}
+
+{% block title %}
+    {% if top.text %}
+        {{ top.text }}
+        {% else %}
+        Best Оnlinе Саsinоs
+    {% endif %} — {% now "F Y" %}
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block header %}
+    <header class="header">
+        <div class="header__inner">
+          <div class="header__container container">
+            <div class="row d-flex flex-column flex-sm-row align-items-start align-items-md-end align-items-md-center justify-content-center">
+              <div class="header__wrapper-logo col-3">
+                <a class="header__logo" href="#">
+                  <img {% if top.logo %}src="{{ top.logo.site_logo.url }}" data-src="{{ top.logo.lazy.url }}" {% else %}src="/media/img/logo-light.svg" data-src="/media/img/logo-desktop.svg"{% endif %} alt="logo" />
+                </a>
+              </div>
+            </div>
+                  <div class="header__wrapper-bizzo">
+                      <div class="header__bizzo-inner">
+                        <div class="header__bizzo header-bizzo" style="background-image: {% if casino_list.0.0 %} url({{ casino_list.0.0.top3_bg.url }}); {% else %} url({{ casino_list.0.1.top3_bg.url }}); {% endif %}">
+                          <div class="row header-bizzo__row d-flex flex-row align-items-start align-items-md-center justify-content-center justify-content-md-between">
+                            <div class="header-bizzo__wrapper-logo col-4 col-md-3">
+                              <!-- <img src="./img/" alt=""> -->
+                              <picture>
+                                <source srcset="{% if casino_list.0.0 %} {{ casino_list.0.0.logo.lazy_logo.url }} {% else %} {{ casino_list.0.1.logo.lazy_logo.url }} {% endif %}" type="image/webp"><img src="{% if casino_list.0.0 %} {{ casino_list.0.0.logo.lazy_logo.url }} {% else %} {{ casino_list.0.0.logo.lazy_logo.url }} {% endif %}" alt="bizzo">
+                              </picture>
+                            </div>
+                            <div class="header-bizzo__right d-flex flex-column flex-md-row justify-content-between align-items-center col-7 col-md-9">
+                              <ul class="header-bizzo__list d-flex align-items-center justify-content-around col-12 col-sm-8 col-md-7">
+                                <li class="header-bizzo__item">
+                                  <p class="header-bizzo__text">
+                                    Bonus
+                                  </p>
+                                  <p class="header-bizzo__value">
+                                      {% if casino_list.0.0 %}
+                                        {{ casino_list.0.0.limit }} {{ top.country.currency.symbol }}
+                                      {% else %}
+                                        {{ casino_list.0.1.limit }} {{ top.country.currency.symbol }}
+                                      {% endif %}
+                                  </p>
+                                </li>
+{#                                 <li class="header-bizzo__item">#}
+{#                                  <p class="header-bizzo__text">#}
+{#                                    Cashback#}
+{#                                  </p>#}
+{#                                  <p class="header-bizzo__value">#}
+{#                                    90%#}
+{#                                  </p>#}
+{#                                </li>#}
+                                <li class="header-bizzo__item">
+                                  <p class="header-bizzo__text">
+                                    Free spin
+                                  </p>
+                                  <p class="header-bizzo__value">
+                                      {% if casino_list.0.0 %}
+                                        {{ casino_list.0.0.fs }} FS
+                                      {% else %}
+                                        {{ casino_list.0.1.fs }} FS
+                                      {% endif %}
+                                  </p>
+                                </li>
+                              </ul>
+                              <div
+                                class="header-bizzo__links d-flex flex-row flex-md-column justify-content-center align-items-center col-8 col-sm-12 col-md-4">
+                                <a class="header-bizzo__link col-12 col-sm-9 col-md-12" href="{{ casino_list.0.0.url }}">
+                                  Get a bonus
+                                </a>
+                                <a class="header-bizzo__pay-link col-2" href="{{ casino_list.0.0.url }}">
+                                  <picture>
+                                    <source srcset="{% if casino_list.0.0 %} {{ casino_list.0.0.pay.all.0.logo.lazy_logo.mini.url }} {% else %} {{ casino_list.0.1.pay.all.0.logo.lazy_logo.mini.url }} {% endif %}" type="image/webp"><img src="{% if casino_list.0.0 %} {{ casino_list.0.0.pay.all.0.logo.lazy_logo_mini.url }} {% else %} {{ casino_list.0.1.pay.all.0.logo.lazy_logo_mini.url }} {% endif %}" alt="Jeton">
+                                  </picture>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+            </div>
+        </div>
+    </header>
+<section class="block-1">
+    <div class="block-1__container container">
+      <div class="row">
+        <h1 class="block-1__title col-7 col-lg-6">
+            {% if top.header %}
+                {{ top.header }}
+            {% else %}
+                Best оnlinе саsinоs for May 2022 — top10casino-no.com
+            {% endif %}
+
+        </h1>
+      </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+    {% for casino in casino_list %}
+        {% if casino.0 %}
+          <li class="items__item">
+              <div class="row">
+                <div class="items__item-top d-flex justify-content-between" style="background-image: url({{ casino.0.top3_bg.url }});">
+                  <div class="items__top-left items-top-left d-flex flex-column align-items-center col-7 col-sm-3">
+                    <div class="items-top-left__wrapper-logo">
+                      <a class="items-top-left__logo" href="{{ casino.0.url }}">
+                        <picture><source srcset="{{ casino.0.logo.lazy_logo.url }}" ><img src="{{ casino.0.logo.lazy_logo.url }}" alt={{ casino.0.name }}></picture>
+                      </a>
+                    </div>
+                    <div class="items-top-left__rating">
+                      <span class="items-top-left__rating-value">10</span>
+                      <img src="/media/img/okay.svg" alt="Rating">
+                    </div>
+                    <div class="items-top-left__descr descr-{{ forloop.counter }}">
+                      <button class="items-top-left__button btn-{{ forloop.counter }}" data-path="text-{{ forloop.counter }}">Read more</button>
+                    </div>
+                  </div>
+                  <div class="items__item-right items-item-right flex-column flex-sm-row d-flex col-5 col-sm-8 col-sm-9 justify-content-sm-end">
+                     <div class="items-item-right__wrapper-item align-items-end align-items-sm-start d-flex flex-column flex-sm-row col-12 col-sm-6 col-md-5">
+                      <div class="items-item-right__item col-11 col-sm-6">
+                        <p class="items-item-right__text">
+                          Bonus
+                        </p>
+                        <p class="items-item-right__value">
+                          {{ casino.0.limit }} {{ top.country.currency.symbol }}
+                        </p>
+                      </div>
+                      <div class="items-item-right__item col-11 col-sm-6">
+                        <p class="items-item-right__text">
+                          Free spin
+                        </p>
+                        <p class="items-item-right__value">
+                          {{ casino.0.fs }} FS
+                        </p>
+                      </div>
+                     </div>
+{#                      <div class="items-item-right__wrapper-item d-flex col-12 col-sm-6 col-md-5">#}
+{#                        <div class="items-item-right__item col-6">#}
+{#                          <p class="items-item-right__text">#}
+{#                            License#}
+{#                          </p>#}
+{#                          <p class="items-item-right__value">#}
+{#                            {{ casino.0.get_license_display }}#}
+{#                          </p>#}
+{#                        </div>#}
+{#                        <div class="items-item-right__item col-6">#}
+{#                          <p class="items-item-right__text">#}
+{#                            Min dep#}
+{#                          </p>#}
+{#                          <p class="items-item-right__value">#}
+{#                            {{ casino.0.min_dep }} $#}
+{#                          </p>#}
+{#                        </div>#}
+{#                      </div>#}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="items__bottom d-flex flex-row-reverse flex-sm-row align-items-center justify-content-between">
+                  <p class="items__bottom-text text-{{ forloop.counter }} col-xl-4" data-da=".descr-{{ forloop.counter }}, 1199, 0" data-target="text-{{ forloop.counter }}">
+                    <span> {{ casino.0.adv1 }} </span>
+                    <span> {{ casino.0.adv2 }} </span>
+                    <span> {{ casino.0.adv3 }} </span>
+                  </p>
+                  <ul class="items__bottom-pays items-bottom-pay d-flex flex-wrap col-7 col-sm-5 col-xl-3">
+                      {% for payment in casino.2 %}
+                        <li class="items-bottom-pay__item">
+                          <a class="items-bottom-pay__link" href="#">
+                            <picture><source srcset="{{ payment.payment.logo.lazy_logo_mini.url }}" type="image/webp"><img src="{{ payment.logo.lazy_logo_mini.url }}" alt="{{ payment.name }}"></picture>
+                          </a>
+                        </li>
+                      {% endfor %}
+                  </ul>
+                  <a href="{{ casino.0.url }}" class="items__bottom-link col-6 col-sm-5 col-xl-3">
+                    Get a bonus
+                  </a>
+                </div>
+              </div>
+          </li>
+
+        {% else %}
+          <li class="items__item">
+              <div class="row">
+                <div class="items__item-top d-flex justify-content-between" style="background-image: url({{ casino.1.top3_bg.url }});">
+                  <div class="items__top-left items-top-left d-flex flex-column align-items-center col-7 col-sm-3">
+                    <div class="items-top-left__wrapper-logo">
+                      <a class="items-top-left__logo" href="{{ casino.1.url }}">
+                        <picture><source srcset="{{ casino.1.logo.lazy_logo.url }}" ><img src="{{ casino.1.logo.lazy_logo.url }}" alt={{ casino.1.name }}></picture>
+                      </a>
+                    </div>
+                    <div class="items-top-left__rating">
+                      <span class="items-top-left__rating-value">10</span>
+                      <img src="/media/img/okay.svg" alt="Rating">
+                    </div>
+                    <div class="items-top-left__descr descr-{{ forloop.counter }}">
+                      <button class="items-top-left__button btn-{{ forloop.counter }}" data-path="text-{{ forloop.counter }}">Read more</button>
+                    </div>
+                  </div>
+                  <div class="items__item-right items-item-right flex-column flex-sm-row d-flex col-5 col-sm-8 col-sm-9 justify-content-sm-end">
+                     <div class="items-item-right__wrapper-item align-items-end align-items-sm-start d-flex flex-column flex-sm-row col-12 col-sm-6 col-md-5">
+                      <div class="items-item-right__item col-11 col-sm-6">
+                        <p class="items-item-right__text">
+                          Bonus
+                        </p>
+                        <p class="items-item-right__value">
+                          {{ casino.1.limit }} {{ top.country.currency.symbol }}
+                        </p>
+                      </div>
+                      <!-- <li class="items-item-right__item col-6">
+                        <p class="items-item-right__text">
+                          Cashback
+                        </p>
+                        <p class="items-item-right__value">
+                          90 %
+                        </p>
+                      </li> -->
+                      <div class="items-item-right__item col-11 col-sm-6">
+                        <p class="items-item-right__text">
+                          Free spin
+                        </p>
+                        <p class="items-item-right__value">
+                           {{ casino.1.fs }} FS
+                        </p>
+                      </div>
+                     </div>
+{#                      <div class="items-item-right__wrapper-item d-flex col-12 col-sm-6 col-md-5">#}
+{#                        <div class="items-item-right__item col-6">#}
+{#                          <p class="items-item-right__text">#}
+{#                            License#}
+{#                          </p>#}
+{#                          <p class="items-item-right__value">#}
+{#                            {{ casino.1.get_license_display }}#}
+{#                          </p>#}
+{#                        </div>#}
+{#                        <div class="items-item-right__item col-6">#}
+{#                          <p class="items-item-right__text">#}
+{#                            Min dep#}
+{#                          </p>#}
+{#                          <p class="items-item-right__value">#}
+{#                            {{ casino.1.min_dep }} {{ casino.1.country.currency.symbol }}#}
+{#                          </p>#}
+{#                        </div>#}
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="items__bottom d-flex flex-row-reverse flex-sm-row align-items-center justify-content-between">
+                  <p class="items__bottom-text text-{{ forloop.counter }} col-xl-4" data-da=".descr-{{ forloop.counter }}, 1199, 0" data-target="text-{{ forloop.counter }}">
+                    <span>{{ casino.0.adv1 }}</span>
+                    <span>{{ casino.0.adv2 }}</span>
+                    <span>{{ casino.0.adv3 }}</span>
+                  </p>
+                  <ul class="items__bottom-pays items-bottom-pay d-flex flex-wrap col-7 col-sm-5 col-xl-3">
+                      {% for payment in casino.2 %}
+                        <li class="items-bottom-pay__item">
+                          <a class="items-bottom-pay__link" href="#">
+                            <picture><source srcset="{{ payment.payment.logo.lazy_logo_mini.url }}" type="image/webp"><img src="{{ payment.logo.lazy_logo_mini.url }}" alt="{{ payment.name }}"></picture>
+                          </a>
+                        </li>
+                      {% endfor %}
+                  </ul>
+                  <a href="{{ casino.1.url }}" class="items__bottom-link col-6 col-sm-5 col-xl-3">
+                    Get a bonus
+                  </a>
+                </div>
+              </div>
+          </li>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block footer %}
+    {% if top.tr_bottom and top.tr_bottom_2 %}
+        <section class="bottom-block">
+          <div class="bottom-block__container container">
+            <div class="row">
+              <ul class="bottom-block__list d-flex flex-column flex-lg-row justify-content-between col-12">
+                <li class="bottom-block__item">
+                  <p class="bottom-block__text">
+                    {{ top.tr_bottom }}
+                  </p>
+                </li>
+                <li class="bottom-block__item bottom-block__item_background">
+                  <p class="bottom-block__text">
+                    {{ top.tr_bottom_2 }}
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+    {% endif %}
+
+        <script>
+        {% for casino in casino_list %}
+                const btn{{ forloop.counter }} = document.querySelector(".btn-{{ forloop.counter }}");
+                const text{{ forloop.counter }} = document.querySelector(".text-{{ forloop.counter }}")
+
+                btn{{ forloop.counter }}.addEventListener("click", function () {
+                    text{{ forloop.counter }}.classList.toggle("text-active")
+                })
+        {% endfor %}
+        document.body.classList.add('light');
+    </script>
+{% endblock %}
+
+{% if top.tr_copy %}
+    {{ top.tr_copy }}
+{% else %}
+{% endif %}

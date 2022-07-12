@@ -1,0 +1,470 @@
+{% extends './base.html' %}
+{% load custom_filter %}
+{% block title %}{{casino.name}}{% endblock %}
+{% block content %}
+	<div class="row">
+		<div class="box">
+			<h2 class="casinoadmin-title">{{casino.name}}</h2>
+			<h3 class="error">{{ccsError}}</h3>
+			<h3 class="error">{{linkError}}</h3>
+			<div class="box-item">
+				{% if casino.id %}
+				<div class="casinoadmin-logobox">
+					<div class="casinoadmin-logo">
+						<img src="{{casino.logo.url}}" alt="{{casino.name}} LOGO">
+					</div>
+				</div>
+				{% endif %}
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					{{formMain.as_p}}
+					<input type="text" name="form" value="main" hidden>
+					<div class="btn-box">
+						<input class="btn" type="submit" value="save">
+					</div>
+				</form>
+			</div>
+			{% if casino.id %}
+
+				<nav class="mt-5">
+					<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#ccs-default" type="button" role="tab" aria-controls="nav-home" aria-selected="true" value="Default">Default</button>
+						{% for boxCCS in formsAllCCS %}
+						<button class="nav-link" id="ccs-btn-{{boxCCS.0.id}}" data-bs-toggle="tab" data-country="{{ boxCCS.0.country.slug }}" data-bs-target="#ccs-{{boxCCS.0.id}}" type="button" role="tab" aria-controls="nav-profile" aria-selected="false" value="{{boxCCS.0.country.slug}}">{{boxCCS.0.country.slug}}</button>
+						{% endfor %}
+						<button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false" value="+">+</button>
+					</div>
+				</nav>
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="ccs-default" role="tabpanel" aria-labelledby="nav-home-tab">
+						<h2 class="box-head"></h2>
+						<div class="box-item">
+							<table class="table-link">
+								<tbody>
+									{% for link in linksDefault %}
+									<tr>
+										<td class="table-link-source">
+											<b>
+												{{link.source}}
+											</b>
+										</td>
+                                        <td class="table-link-source">
+                                            {{link.top}}
+										</td>
+										<td class="text-center">
+											{{link.url}}
+										</td>
+										<td>
+											<a class="btn-circle btn-delete" href="#link-delete-{{link.id}}" data-bs-target="#link-delete-{{link.id}}" data-bs-toggle="modal">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+													<path d="M20 2h-4v-.85C16 .52 15.48 0 14.85 0h-5.7C8.52 0 8 .52 8 1.15V2H4c-1.1 0-2 .9-2 2 0 .74.4 1.38 1 1.73v14.02C3 22.09 4.91 24 7.25 24h9.5c2.34 0 4.25-1.91 4.25-4.25V5.73c.6-.35 1-.99 1-1.73 0-1.1-.9-2-2-2zm-1 17.75c0 1.24-1.01 2.25-2.25 2.25h-9.5C6.01 22 5 20.99 5 19.75V6h14v13.75z" />
+													<path d="M8 20.022c-.553 0-1-.447-1-1v-10c0-.553.447-1 1-1s1 .447 1 1v10c0 .553-.447 1-1 1zm8 0c-.553 0-1-.447-1-1v-10c0-.553.447-1 1-1s1 .447 1 1v10c0 .553-.447 1-1 1zm-4 0c-.553 0-1-.447-1-1v-10c0-.553.447-1 1-1s1 .447 1 1v10c0 .553-.447 1-1 1z" />
+												</svg>
+											</a>
+										</td>
+									</tr>
+									<div class="modal fade" id="link-delete-{{link.id}}" style="display: none;" tabindex="-1" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content position-relative">
+												<button type="button" class="close modal-close" data-bs-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">×</span>
+												</button>
+												<div class="modal-wrapper">
+													<p>Точно удалить ссылку на {{link.source}} у {{casino.name}}?</p>
+													<div class="btn-box">
+														<a class="btn" href="{% url 'linkdelete' slug=link.id %}">Удалить</a>
+														<button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">Отмена</span>
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									{% endfor %}
+								</tbody>
+							</table>
+
+							<form method="POST">
+								{% csrf_token %}
+								{{formNewLink.as_p}}
+								<input type="text" class="form-input-default" name="form" value="default-link" hidden>
+								<div class="btn-box">
+									<input class="btn" type="submit" value="save">
+								</div>
+							</form>
+						</div>
+						<div class="box-item">
+							<form method="POST">
+								{% csrf_token %}
+								{{formDefault.as_p}}
+								<input type="text" class="form-input-default" name="form" value="default" hidden>
+								<div class="btn-box">
+									<input class="btn" type="submit" value="save">
+								</div>
+							</form>
+                                <div class="casinos d-flex justify-content-between">
+                                    <div class="casinos-block casinos-block-top">
+                                        <h2 class="subheader">Payments in Top</h2>
+                                        <div class="box-item">
+                                            <ul id="sortable1000" class="connectedSortable casinos-box casinos-box-top">
+                                                {% for payment in payment_top_default %}
+                                                    <li class="casino-top" id={{payment.id}} data-position={{payment.position}}>
+                                                        <div class="casino-top-namebox">
+                                                            <h4>
+                                                                {{payment.name}}
+                                                            </h4>
+                                                            <a class="btn-circle" href="{% url 'payment_edit' slug=payment.id %}" target="_blanc">
+                                                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 490.305 490.305" style="enable-background:new 0 0 490.305 490.305;" xml:space="preserve">
+                                                                        <g>
+                                                                            <path d="M472.469,81.443l-63.6-63.6c-13.1-16.4-53.2-30.2-83.4,0l-290.9,289.9l0,0c-4.4,4.4-6.5,10.1-6.2,15.6l-27.1,141.8
+                                                                            c-4.2,16.2,11.9,26.6,22.9,25l147-29.2c4.2,0,7.3-2.1,10.4-5.2l290.9-289.8C495.469,142.943,495.469,104.443,472.469,81.443z
+                                                                             M354.669,46.043c6.3-7.3,18.8-7.3,26.1,0l17.3,17l-289.7,289.7l-30.1-30.4L354.669,46.043z M61.769,364.043l64.4,64.4l-80.1,15.8
+                                                                            L61.769,364.043z M444.369,135.643l-276.8,276.8l-30.1-30.4l290-290l16.8,16.5C453.469,118.343,449.169,130.743,444.369,135.643z"
+                                                                            />
+                                                                        </g>
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="casinos-block casinos-block-all">
+                                        <h2 class="subheader">All Payments</h2>
+                                        <div class="box-item">
+                                            <ul id="sortable2000" class="connectedSortable casinos-box casinos-box-all">
+                                                {% for payment in payment_all_default %}
+                                                    <li class="casino-top" id={{payment.id}}>
+                                                        <div class="casino-top-namebox">
+                                                            <h4>
+                                                                {{payment.name}}
+                                                            </h4>
+                                                            <a class="btn-circle" href="{% url 'payment_edit' slug=payment.id %}" target="_blanc">
+                                                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 490.305 490.305" style="enable-background:new 0 0 490.305 490.305;" xml:space="preserve">
+                                                                        <g>
+                                                                            <path d="M472.469,81.443l-63.6-63.6c-13.1-16.4-53.2-30.2-83.4,0l-290.9,289.9l0,0c-4.4,4.4-6.5,10.1-6.2,15.6l-27.1,141.8
+                                                                            c-4.2,16.2,11.9,26.6,22.9,25l147-29.2c4.2,0,7.3-2.1,10.4-5.2l290.9-289.8C495.469,142.943,495.469,104.443,472.469,81.443z
+                                                                             M354.669,46.043c6.3-7.3,18.8-7.3,26.1,0l17.3,17l-289.7,289.7l-30.1-30.4L354.669,46.043z M61.769,364.043l64.4,64.4l-80.1,15.8
+                                                                            L61.769,364.043z M444.369,135.643l-276.8,276.8l-30.1-30.4l290-290l16.8,16.5C453.469,118.343,449.169,130.743,444.369,135.643z"
+                                                                            />
+                                                                        </g>
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+						</div>
+					</div>
+					{% for boxCCS in formsAllCCS %}
+					<div class="tab-pane fade" id="ccs-{{boxCCS.0.id}}" role="tabpanel" aria-labelledby="nav-profile-tab">
+						<h2 class="box-head">{{boxCCS.0.country}}</h2>
+
+						<div class="box-item">
+							<table class="table-link">
+								<tbody>
+							{% for link in boxCCS.2 %}
+							<tr>
+								<td class="table-link-source">
+									<b>
+										{{link.source}}
+									</b>
+								</td>
+                                <td class="table-link-source">
+                                    {{link.top}}
+								</td>
+								<td class="text-center">
+									{{link.url}}
+								</td>
+								<td>
+									<a class="btn-circle btn-delete" href="#link-delete-{{link.id}}" data-bs-target="#link-delete-{{link.id}}" data-bs-toggle="modal">
+										<svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+											<path d="M20 2h-4v-.85C16 .52 15.48 0 14.85 0h-5.7C8.52 0 8 .52 8 1.15V2H4c-1.1 0-2 .9-2 2 0 .74.4 1.38 1 1.73v14.02C3 22.09 4.91 24 7.25 24h9.5c2.34 0 4.25-1.91 4.25-4.25V5.73c.6-.35 1-.99 1-1.73 0-1.1-.9-2-2-2zm-1 17.75c0 1.24-1.01 2.25-2.25 2.25h-9.5C6.01 22 5 20.99 5 19.75V6h14v13.75z" />
+											<path d="M8 20.022c-.553 0-1-.447-1-1v-10c0-.553.447-1 1-1s1 .447 1 1v10c0 .553-.447 1-1 1zm8 0c-.553 0-1-.447-1-1v-10c0-.553.447-1 1-1s1 .447 1 1v10c0 .553-.447 1-1 1zm-4 0c-.553 0-1-.447-1-1v-10c0-.553.447-1 1-1s1 .447 1 1v10c0 .553-.447 1-1 1z" />
+										</svg>
+									</a>
+								</td>
+							</tr>
+							<div class="modal fade" id="link-delete-{{link.id}}" style="display: none;" tabindex="-1" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content position-relative">
+										<button type="button" class="close modal-close" data-bs-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">×</span>
+										</button>
+										<div class="modal-wrapper">
+											<p>Точно удалить ссылку на {{link.source}} у {{casino.name}}?</p>
+											<div class="btn-box">
+												<a class="btn" href="{% url 'linkdelete' slug=link.id %}">Удалить</a>
+												<button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">Отмена</span>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+							</tbody>
+							</table>
+							<form method="POST">
+								{% csrf_token %}
+								{{formNewLink.as_p}}
+								<input type="text" class="form-input-default" name="form" value="ccs-link" hidden>
+								<input type="text" class="form-input-default" name="ccs-id" value="{{boxCCS.0.id}}" hidden>
+								<div class="btn-box">
+									<input class="btn" type="submit" value="save">
+								</div>
+							</form>
+						</div>
+
+						<div class="box-item">
+						<form method="POST">
+							{% csrf_token %}
+							{{boxCCS.1.as_p}}
+							<input type="text" name="form" value="ccs" hidden>
+							<input type="text" class="form-input-default" name="ccs-id" value="{{boxCCS.0.id}}" hidden>
+							<div class="btn-box">
+								<input class="btn" type="submit" value="save">
+							</div>
+						</form>
+						<a class="btn-circle btn-delete" href="#delete-{{boxCCS.0.id}}" data-bs-target="#delete-{{boxCCS.0.id}}" data-bs-toggle="modal">
+							<svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+								<path d="M20 2h-4v-.85C16 .52 15.48 0 14.85 0h-5.7C8.52 0 8 .52 8 1.15V2H4c-1.1 0-2 .9-2 2 0 .74.4 1.38 1 1.73v14.02C3 22.09 4.91 24 7.25 24h9.5c2.34 0 4.25-1.91 4.25-4.25V5.73c.6-.35 1-.99 1-1.73 0-1.1-.9-2-2-2zm-1 17.75c0 1.24-1.01 2.25-2.25 2.25h-9.5C6.01 22 5 20.99 5 19.75V6h14v13.75z" />
+								<path d="M8 20.022c-.553 0-1-.447-1-1v-10c0-.553.447-1 1-1s1 .447 1 1v10c0 .553-.447 1-1 1zm8 0c-.553 0-1-.447-1-1v-10c0-.553.447-1 1-1s1 .447 1 1v10c0 .553-.447 1-1 1zm-4 0c-.553 0-1-.447-1-1v-10c0-.553.447-1 1-1s1 .447 1 1v10c0 .553-.447 1-1 1z" />
+							</svg>
+						</a>
+                            <div class="casinos d-flex justify-content-between">
+                                    <div class="casinos-block casinos-block-top">
+                                        <h2 class="subheader">Payments in Top</h2>
+                                        <div class="box-item">
+                                            <ul id="sortable{{ forloop.counter }}" class="connectedSortable casinos-box casinos-box-top">
+                                                {% for payment in payment_top|get_at_index:forloop.counter0 %}
+                                                    <li class="casino-top" id={{payment.id}} data-position={{payment.position}}>
+                                                        <div class="casino-top-namebox">
+                                                            <h4>
+                                                                {{payment.name}}
+                                                            </h4>
+                                                            <a class="btn-circle" href="{% url 'payment_edit' slug=payment.id %}" target="_blanc">
+                                                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 490.305 490.305" style="enable-background:new 0 0 490.305 490.305;" xml:space="preserve">
+                                                                        <g>
+                                                                            <path d="M472.469,81.443l-63.6-63.6c-13.1-16.4-53.2-30.2-83.4,0l-290.9,289.9l0,0c-4.4,4.4-6.5,10.1-6.2,15.6l-27.1,141.8
+                                                                            c-4.2,16.2,11.9,26.6,22.9,25l147-29.2c4.2,0,7.3-2.1,10.4-5.2l290.9-289.8C495.469,142.943,495.469,104.443,472.469,81.443z
+                                                                             M354.669,46.043c6.3-7.3,18.8-7.3,26.1,0l17.3,17l-289.7,289.7l-30.1-30.4L354.669,46.043z M61.769,364.043l64.4,64.4l-80.1,15.8
+                                                                            L61.769,364.043z M444.369,135.643l-276.8,276.8l-30.1-30.4l290-290l16.8,16.5C453.469,118.343,449.169,130.743,444.369,135.643z"
+                                                                            />
+                                                                        </g>
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="casinos-block casinos-block-all">
+                                        <h2 class="subheader">All Payments</h2>
+                                        <div class="box-item">
+                                            <ul id="sortable{{ forloop.counter|add:100 }}" class="connectedSortable casinos-box casinos-box-all">
+                                                {% for payment in payment_all|get_at_index:forloop.counter0 %}
+                                                    <li class="casino-top" id={{payment.id}} >
+                                                        <div class="casino-top-namebox">
+                                                            <h4>
+                                                                {{payment.name}}
+                                                            </h4>
+                                                            <a class="btn-circle" href="{% url 'payment_edit' slug=payment.id %}" target="_blanc">
+                                                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 490.305 490.305" style="enable-background:new 0 0 490.305 490.305;" xml:space="preserve">
+                                                                        <g>
+                                                                            <path d="M472.469,81.443l-63.6-63.6c-13.1-16.4-53.2-30.2-83.4,0l-290.9,289.9l0,0c-4.4,4.4-6.5,10.1-6.2,15.6l-27.1,141.8
+                                                                            c-4.2,16.2,11.9,26.6,22.9,25l147-29.2c4.2,0,7.3-2.1,10.4-5.2l290.9-289.8C495.469,142.943,495.469,104.443,472.469,81.443z
+                                                                             M354.669,46.043c6.3-7.3,18.8-7.3,26.1,0l17.3,17l-289.7,289.7l-30.1-30.4L354.669,46.043z M61.769,364.043l64.4,64.4l-80.1,15.8
+                                                                            L61.769,364.043z M444.369,135.643l-276.8,276.8l-30.1-30.4l290-290l16.8,16.5C453.469,118.343,449.169,130.743,444.369,135.643z"
+                                                                            />
+                                                                        </g>
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                            </div>
+						</div>
+					</div>
+					<div class="modal fade" id="delete-{{boxCCS.0.id}}" style="display: none;" tabindex="-1" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content position-relative">
+								<button type="button" class="close modal-close" data-bs-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<div class="modal-wrapper">
+									<p>Точно удалить гео {{boxCCS.0.country}} у {{casino.name}}?</p>
+									<div class="btn-box">
+										<a class="btn" href="{% url 'ccsdelete' slug=boxCCS.0.id %}">Удалить</a>
+										<button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">Отмена</span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+					<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+						<h2 class="box-head"></h2>
+						<div class="box-item">
+							<form method="POST">
+							{% csrf_token %}
+							{{formNewCCS.as_p}}
+							<input class="form-input-default" type="text" name="form" value="newCCS" hidden>
+							<div class="btn-box">
+								<input class="btn" type="submit" value="save">
+							</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        let country;
+        $('.nav-link').on('click', function () {
+            country = this.value;
+
+        });
+        let href = window.location.origin + "{%  url 'payment_position' slug=casino.id %}";
+
+        $(function() {
+			$("#sortable1000, #sortable2000").sortable({
+				connectWith: ".connectedSortable",
+				placeholder: 'emptySpace',
+				cursor: "move",
+			}).disableSelection();
+			/*$("#sortable1").sortable({
+				update: sender(event, ui),
+			}).disableSelection();*/
+		});
+
+		$("#sortable1000").on("sortupdate", function(event, ui) {
+			let arrayPaymentId = $("#sortable1000").sortable("toArray");
+			let deletePaymentId
+			if (arrayPaymentId.indexOf(ui.item.attr("id")) == -1) {
+				deletePaymentId = ui.item.attr("id")
+			}
+			$.ajax({
+				url: href,
+				method: "POST",
+				dataType: "json",
+				cache: false,
+				success: function() {
+					console.log('send ' + arrayPaymentId);
+				},
+				data: {
+					array_payment_id: JSON.stringify(arrayPaymentId),
+					delete_payment_id: deletePaymentId,
+                    country_slug: country,
+				}
+			}).done((responce) => {
+				console.log('send ' + responce);
+			})
+		});
+
+		function sender(event, ui) {
+			var payment_id = $("#sortable1000").sortable("toArray");
+			console.log(ui.sender);
+			if (ui.sender == $("#sortable1000")) {
+				console.log("from top!")
+			}
+			$.ajax({
+				url: href,
+				method: "POST",
+				dataType: "json",
+				cache: false,
+				success: function() {
+					console.log('send ' + payment_id);
+				},
+				data: {
+					casino_id: JSON.stringify(payment_id)
+				}
+			}).done((responce) => {
+				console.log('send ' + responce);
+			})
+		};
+
+        {% for boxCCS in formsAllCCS %}
+            $(function() {
+                $("#sortable{{ forloop.counter }}, #sortable{{ forloop.counter|add:100 }}").sortable({
+                    connectWith: ".connectedSortable",
+                    placeholder: 'emptySpace',
+                    cursor: "move",
+                }).disableSelection();
+                /*$("#sortable1").sortable({
+                    update: sender(event, ui),
+                }).disableSelection();*/
+            });
+
+            $("#sortable{{ forloop.counter }}").on("sortupdate", function(event, ui) {
+                let arrayPaymentId = $("#sortable{{ forloop.counter }}").sortable("toArray");
+                let deletePaymentId
+                if (arrayPaymentId.indexOf(ui.item.attr("id")) == -1) {
+                    deletePaymentId = ui.item.attr("id")
+                }
+                $.ajax({
+                    url: href,
+                    method: "POST",
+                    dataType: "json",
+                    cache: false,
+                    success: function() {
+                        console.log('send ' + arrayPaymentId);
+                    },
+                    data: {
+                        array_payment_id: JSON.stringify(arrayPaymentId),
+                        delete_payment_id: deletePaymentId,
+                        country_slug: country,
+                    }
+                }).done((responce) => {
+                    console.log('send ' + responce);
+                })
+            });
+
+            function sender(event, ui) {
+                var payment_id = $("#sortable{{ forloop.counter }}").sortable("toArray");
+                console.log(ui.sender);
+                if (ui.sender == $("#sortable{{ forloop.counter }}")) {
+                    console.log("from top!")
+                }
+                $.ajax({
+                    url: href,
+                    method: "POST",
+                    dataType: "json",
+                    cache: false,
+                    success: function() {
+                        console.log('send ' + payment_id);
+                    },
+                    data: {
+                        casino_id: JSON.stringify(payment_id)
+                    }
+                }).done((responce) => {
+                    console.log('send ' + responce);
+                })
+            };
+        {% endfor %}
+		/* $("#sortable1").on("sortupdate", function(event, ui){
+			var sortedIDs = $( "#sortable1" ).sortable( "toArray" );
+			console.log('send ' + sortedIDs)
+		  });
+	*/
+		</script>
+{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "JejuGothic";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("JejuGothic-Regular"), url("/media/fonts/JejuGothic/JejuGothic-Regular.woff2") format("woff2"), url("/media/fonts/JejuGothic/JejuGothic-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "Khula";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("Khula-Regular"), url("/media/fonts/Khula/Khula-Regular.woff2") format("woff2"), url("/media/fonts/Khula/Khula-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "Khula";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local("Khula-Bold"), url("/media/fonts/Khula/Khula-Bold.woff2") format("woff2"), url("/media/fonts/Khula/Khula-Bold.woff") format("woff");
+}
+@font-face {
+  font-family: "Kanit";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: local("Kanit-ExtraBold"), url("/media/fonts/Kanit/Kanit-ExtraBold.woff2") format("woff2"), url("/media/fonts/Kanit/Kanit-ExtraBold.woff") format("woff");
+}

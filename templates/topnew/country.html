@@ -1,0 +1,658 @@
+{% extends "topnew/base.html" %}
+{% load mathfilters %}
+{% load thumbnail %}
+{% load easy_thumbnails_tags %}
+{% block title %}{% if top.text %}{{ top.text }}{% else %}Best Оnlinе Саsinоs{% endif %} — {% now "F Y" %}{% endblock %}
+
+{% block style %}
+body {
+		background: {{ top.bg_color }} url('{{ top.bg_img.bg_desc.url }}') top center fixed !important;
+}
+@media only screen and (max-width : 480px) {
+	html, body{
+		width: 100%;
+		height: 100%;
+	}
+	.wrapper{
+		width: 100%;
+		height: 100%;
+		overflow: scroll;
+	}
+	body {
+		background: {{ top.bg_color }} url('{% if top.bg_mob_img %}{{ top.bg_mob_img.bg_mob.url }}{% else %}{{ top.bg_img.bg_mob.url }}{% endif %}') top center fixed !important;
+	}
+}
+@media only screen and (min-width : 480px) and (max-width : 992px) {
+
+	body {
+		background: {{ top.bg_color }} url('{% if top.bg_tab_img %}{{ top.bg_tab_img.bg_tab.url }}{% else %}{{ top.bg_img.bg_tab.url }}{% endif %}') top center fixed !important;
+	}
+}
+header {
+	background: {{ top.h_color }}d6;
+	// border-bottom: 1px solid {{ top.color }}80;
+}
+.mailbox{
+	background:{{ top.h_color }}d6;
+	border-bottom: 1px solid #BE4BC880;
+}
+.mailbox-input{
+	border-radius: 7px;
+	background: #00000080;
+	box-shadow: 1px 1px 5px {{ top.color }}3d, -1px -1px 5px {{ top.color }}3d, 1px -1px 5px {{ top.color }}3d, -1px 1px 5px {{ top.color }}3d;
+}
+.mailbox-submit{
+	border: 1px solid {{ top.color }};
+	color: {{ top.color }} !important;
+}
+.mailbox-submit:hover {
+	border: 1px solid {{ top.color }} !important;
+	text-shadow: 1px 1px 7px {{ top.color }}3d, -1px -1px 7px {{ top.color }}3d, 1px -1px 7px {{ top.color }}3d, -1px 1px 7px {{ top.color }}3d;
+	box-shadow: 1px 1px 7px {{ top.color }}3d, -1px -1px 7px {{ top.color }}3d, 1px -1px 7px {{ top.color }}3d, -1px 1px 7px {{ top.color }}3d;
+}
+.block-wrapper {
+	border: 1px solid {{ top.color }}80;
+	background: {{ top.bg_color }}c4;
+	box-shadow: 0 0 5px {{ top.color }}4d;
+}
+.title {
+	color: {{ top.color }};
+}
+.light {
+	text-shadow: 1px 1px 5px {{ top.color }}3d, -1px -1px 5px {{ top.color }}3d, 1px -1px 5px {{ top.color }}3d, -1px 1px 5px {{ top.color }}3d;
+}
+.light-box {
+	box-shadow: 1px 1px 5px {{ top.color }}3d, -1px -1px 5px {{ top.color }}3d, 1px -1px 5px {{ top.color }}3d, -1px 1px 5px {{ top.color }}3d;
+}
+.icons .data .mindep {
+	color: {{ top.color }};
+}
+.icons .data .license {
+	color: {{ top.color }};
+}
+.play-button {
+	border: 1px solid {{ top.button_color }} !important;
+	color: {{ top.button_text_color }} !important;
+	background-color: {{ top.button_color }} !important;
+}
+.play-button:hover {
+	border: 1px solid {{ top.button_color }} !important;
+	text-shadow: 1px 1px 7px {{ top.button_color }}3d, -1px -1px 7px {{ top.button_color }}3d, 1px -1px 7px {{ top.button_color }}3d, -1px 1px 7px {{ top.button_color }}3d !important;
+}
+.bottom-block {
+	background: {{ top.h_color }}d6;
+	border-top: 1px solid {{ top.color }}80;
+}
+
+
+{% if top.icons_color %}
+.p-logos img {
+	filter: grayscale(100%);
+}
+.p-logos img:hover {
+	filter: grayscale(0%);
+}
+
+{% endif %}
+{% endblock %}
+
+{% block content %}
+	{% for casinoBox in casino_list %}
+		<div class="block-wrapper light-box {% if forloop.counter == 1 %}gold-crown{% elif forloop.counter == 2 %}silver-crown{% elif forloop.counter == 3 %}bronze-crown{% endif %}">
+			{% if casinoBox.0.badge %}
+			<div class="badge-wrapper">
+				<img class="badge-bg" src="/media/img/badges/lazy/{{ casinoBox.0.badge.color }}" data-src="/media/img/badges/{{ casinoBox.0.badge.color }}" alt="badge" />
+				<span class="badge-text">{{ casinoBox.0.badge.text }}</span>
+			</div>
+			{% endif %}
+			<div class="container block-padding">
+				<div class="row">
+					<div class="block-logo col-4 col-lg-3">
+						<div class="container gx-1 h-100">
+							<div class="row gx-1 h-100">
+								<div class="logo col-12 col-lg-12">
+                                  {% if casinoBox.0 and not casinoBox.1.pay_left and not casinoBox.1.pay_right %}
+                                      {% if casinoBox.0.pay_left %}
+                                        <div class="pay1">
+                                          <a href="{{ casinoBox.0.url }}" target="_blank">
+                                            <img src="{{ casinoBox.0.pay_left.logo.lazy_logo_mini.url }}" data-src="{{ casinoBox.0.pay_left.logo.site_logo_mini.url }}" title="{{ casinoBox.0.pay_left.name }}" alt="{{ casinoBox.0.pay_left.name }}" />
+                                          </a>
+                                        </div>
+                                      {% endif %}
+                                      {% if casinoBox.0.pay_right %}
+                                        <div class="pay2">
+                                          <a href="{{ casinoBox.1.url }}" target="_blank">
+                                            <img src="{{ casinoBox.0.pay_right.logo.lazy_logo_mini.url }}" data-src="{{ casinoBox.0.pay_right.logo.site_logo_mini.url }}" title="{{ casinoBox.0.pay_right.name }}" alt="{{ casinoBox.0.pay_right.name }}" />
+                                          </a>
+                                        </div>
+                                      {% endif %}
+                                  {% else %}
+                                      {% if casinoBox.1.pay_left %}
+                                        <div class="pay1">
+                                          <a href="{{ casinoBox.1.url }}" target="_blank">
+                                            <img src="{{ casinoBox.1.pay_left.logo.lazy_logo_mini.url }}" data-src="{{ casinoBox.1.pay_left.logo.site_logo_mini.url }}" title="{{ casinoBox.1.pay_left.name }}" alt="{{ casinoBox.1.pay_left.name }}" />
+                                          </a>
+                                        </div>
+                                      {% endif %}
+                                      {% if casinoBox.1.pay_right %}
+                                        <div class="pay2">
+                                          <a href="{{ casinoBox.1.url }}" target="_blank">
+                                            <img src="{{ casinoBox.1.pay_right.logo.lazy_logo_mini.url }}" data-src="{{ casinoBox.1.pay_right.logo.site_logo_mini.url }}" title="{{ casinoBox.1.pay_right.name }}" alt="{{ casinoBox.1.pay_right.name }}" />
+                                          </a>
+                                        </div>
+                                      {% endif %}
+                                  {% endif %}
+									<a class="logo-link" href="{% if casinoBox.1 %}{{ casinoBox.1.url }}{% else %}{{ casinoBox.0.url }}{% endif %}" target="_blank" rel="noreferrer">
+										<img class="logo-img" src="{{ casinoBox.0.logo.lazy_logo.url }}" data-src="{{ casinoBox.0.logo.site_logo.url }}" alt="{{ casinoBox.0.name }}" />
+									</a>
+									<div class="stars col-12 col-lg-12" data-position="{{forloop.counter0}}">
+										<img class="star" src="/media/img/stars/star-50.png" data-src="/media/img/stars/star-50.png" alt="rating">
+										<div class="rating-text light">
+											{% if top.tr_score %}
+												{{ top.tr_score }}
+											{% else %}
+												Score
+											{% endif %} - <span class="rating"></span>/5 (<span class="votes"></span> {% if top.tr_votes %}{{ top.tr_votes }}{% else %}Votes{% endif %})</div>
+									</div>
+								</div>
+{#								<div class="ld-icons col-12 col-lg-12">#}
+{#									<div class="row">#}
+{#										<div class="icons col-12 col-lg-12">#}
+{#											<div class="data row">#}
+{#												<div class="license light col-6">#}
+{#													<div>{% if top.tr_license %}{{ top.tr_license }}{% else %}License{% endif %}</div>#}
+{#													<span><img src="/media/img/license/{{ casinoBox.0.license }}.png" data-src="/media/img/license/{{ casinoBox.0.license }}.png" /></span>#}
+{#												</div>											#}
+{#												<div class="mindep light col-6">#}
+{#													<div>{% if top.tr_md %}{{ top.tr_md }}{% else %}Min Dep{% endif %}</div><span>#}
+{#													{% if casinoBox.1 %}#}
+{#														{{ casinoBox.1.min_dep }}#}
+{#													{% else %}#}
+{#														{{ casinoBox.0.min_dep }}#}
+{#													{% endif %}#}
+{#													{{ top.country.currency.symbol }}</span>#}
+{#												</div>								#}
+{#											</div>#}
+{#										</div>#}
+{#									</div>#}
+{#								</div>#}
+							</div><!--Row-->
+						</div><!--Container-->
+					</div><!--block-logo-->
+					<div class="block-body col-8 col-lg-9">
+						<div class="row">
+							<div class="col-12 col-lg-4 {% if not casinoBox.1.limit and not casinoBox.1.fs %} d-flex align-items-center justify-content-around{% endif %}">
+								<div class="row w-100 justify-content-center">
+								{% if not casinoBox.1.limit and not casinoBox.1.fs %}
+									<div class="ld-icons-desktop col-12 col-lg-8">
+								{% else %}
+									<div class="ld-icons-desktop col-12 col-lg-12">
+								{% endif %}
+										<div class="row">
+											<div class="icons col-12 col-lg-12">
+												<div class="data row">
+													<div class="license light col-6">
+														<div class="desk-title">{% if top.tr_license %}{{ top.tr_license }}{% else %}License{% endif %}</div>
+														<span><img src="/media/img/license/{{ casinoBox.0.license }}.png" data-src="/media/img/license/{{ casinoBox.0.license }}.png" /></span>
+													</div>
+													<div class="mindep light col-6">
+														<div class="desk-title">{% if top.tr_md %}{{ top.tr_md }}{% else %}Min Dep{% endif %}</div>
+														<span>
+															{% if casinoBox.1 %}
+																{{ casinoBox.1.min_dep }}
+															{% else %}
+																{{ casinoBox.0.min_dep }}
+															{% endif %}{{ top.country.currency.symbol }}
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>									
+								{% if casinoBox.1 %}
+									{% if casinoBox.1.limit %}
+										{% if casinoBox.1.fs %}
+											<div class="promo light col-6">
+												<div class="title desk-title">
+													{% if top.tr_bonus %}{{ top.tr_bonus }}{% else %}BONUS{% endif %}
+												</div>
+												<div class="data">
+													<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+														<img class="game-block__icon " src="/media/img/gift.png" data-src="/media/img/gift.png" alt="gift" />
+													</a>
+													<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+														<h3>
+															{{ top.country.currency.symbol }} {{ casinoBox.1.bonus_limit }}
+														</h3>
+													</a>
+												</div>
+											</div>
+											<div class="fs light col-6">
+												<div class="title desk-title">
+													{% if top.tr_fs %}{{ top.tr_fs }}{% else %}FREE SPIN{% endif %}
+												</div>
+												<div class="data">
+													<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+														<img src="/media/img/repeat.png" data-src="/media/img/repeat.png" alt="gift" />
+													</a>
+													<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+														<h3>
+															{{ casinoBox.1.fs }} FS
+														</h3>
+													</a>
+												</div>
+											</div>
+										{% else %}
+											{% if casinoBox.1.cashback %}
+												<div class="promo light col-6">
+													<div class="title desk-title">
+														{% if top.tr_bonus %}{{ top.tr_bonus }}{% else %}BONUS{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<img class="game-block__icon " src="/media/img/gift.png" data-src="/media/img/gift.png" alt="gift" />
+														</a>
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																{{ top.country.currency.symbol }} {{ casinoBox.1.bonus_limit }}
+															</h3>
+														</a>
+													</div>
+												</div>
+												<div class="cashback light col-6">
+													<div class="title desk-title">
+														{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<img class="game-block__icon " src="/media/img/cashback.png" data-src="/media/img/cashback.png" alt="cashback" />
+														</a>
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																{{ casinoBox.1.cashback }}%
+															</h3>
+														</a>
+													</div>
+												</div>
+											{% else %}
+												<div class="promo light col-12">
+													<div class="title desk-title">
+														{% if top.tr_bonus %}{{ top.tr_bonus }}{% else %}BONUS{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<img class="game-block__icon " src="/media/img/gift.png" data-src="/media/img/gift.png" alt="gift" />
+														</a>
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																{{ top.country.currency.symbol }} {{ casinoBox.1.bonus_limit }}
+															</h3>
+														</a>
+													</div>
+												</div>
+											{% endif %}
+										{% endif %}
+									{% else %}
+										{% if casinoBox.1.fs %}
+											{% if casinoBox.1.cashback %}
+												<div class="fs light col-6">
+													<div class="title desk-title">
+														{% if top.tr_fs %}{{ top.tr_fs }}{% else %}FREE SPIN{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<img src="/media/img/repeat.png" data-src="/media/img/repeat.png" alt="gift" />
+														</a>
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																{{ casinoBox.1.fs }} FS
+															</h3>
+														</a>
+													</div>
+												</div>
+												<div class="cashback light col-6">
+													<div class="title desk-title">
+														{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<img class="game-block__icon " src="/media/img/cashback.png" data-src="/media/img/cashback.png" alt="cashback" />
+														</a>
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																{{ casinoBox.1.cashback }}%
+															</h3>
+														</a>
+													</div>
+												</div>
+											{% else %}
+												<div class="fs light col-12">
+													<div class="title desk-title">
+														{% if top.tr_fs %}{{ top.tr_fs }}{% else %}FREE SPIN{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<img src="/media/img/repeat.png" data-src="/media/img/repeat.png" alt="gift" />
+														</a>
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																{{ casinoBox.1.fs }} FS
+															</h3>
+														</a>
+													</div>
+												</div>
+											{% endif %}
+										{% else %}
+										<!-- ONLY CASHBACK -->
+											{% if casinoBox.1.cashback %}
+												
+												<div class="cashback light col-4">
+													<div class="title desk-title">
+														{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+													</div>
+													<div class="data">
+														<a class="d-lg-none" href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<img class="game-block__icon " src="/media/img/cashback.png" data-src="/media/img/cashback.png" alt="cashback" />
+														</a>
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																{{ casinoBox.1.cashback }}%
+															</h3>
+														</a>
+													</div>
+												</div>
+											{% else %}
+												<div class="cashback light col-4">
+													<div class="title desk-title">
+														{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<img class="game-block__icon " src="/media/img/cashback.png" data-src="/media/img/cashback.png" alt="cashback" />
+														</a>
+														<a href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																10%
+															</h3>
+														</a>
+													</div>
+												</div>
+											{% endif %}
+										{% endif %}
+									{% endif %}
+								{% else %}
+									{% if casinoBox.0.limit %}
+										{% if casinoBox.0.fs %}
+											<div class="promo light col-6">
+												<div class="title desk-title">
+													{% if top.tr_bonus %}{{ top.tr_bonus }}{% else %}BONUS{% endif %}
+												</div>
+												<div class="data">
+													<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+														<img class="game-block__icon " src="/media/img/gift.png" data-src="/media/img/gift.png" alt="gift" />
+													</a>
+													<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+														<h3>
+															{{ top.country.currency.symbol }} {{ casinoBox.0.bonus_limit }}
+														</h3>
+													</a>
+												</div>
+											</div>
+											<div class="fs light col-6">
+												<div class="title desk-title">
+													{% if top.tr_fs %}{{ top.tr_fs }}{% else %}FREE SPIN{% endif %}
+												</div>
+												<div class="data">
+													<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+														<img src="/media/img/repeat.png" data-src="/media/img/repeat.png" alt="gift" />
+													</a>
+													<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+														<h3>
+															{{ casinoBox.0.fs }} FS
+														</h3>
+													</a>
+												</div>
+											</div>
+										{% else %}
+											{% if casinoBox.0.cashback %}
+												<div class="promo light col-6">
+													<div class="title desk-title">
+														{% if top.tr_bonus %}{{ top.tr_bonus }}{% else %}BONUS{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<img class="game-block__icon " src="/media/img/gift.png" data-src="/media/img/gift.png" alt="gift" />
+														</a>
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																{{ top.country.currency.symbol }} {{ casinoBox.0.bonus_limit }}
+															</h3>
+														</a>
+													</div>
+												</div>
+												<div class="cashback light col-6">
+													<div class="title desk-title">
+														{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<img class="game-block__icon " src="/media/img/cashback.png" data-src="/media/img/cashback.png" alt="cashback" />
+														</a>
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																{{ casinoBox.0.cashback }}%
+															</h3>
+														</a>
+													</div>
+												</div>
+											{% else %}
+												<div class="promo light col-12">
+													<div class="title desk-title">
+														{% if top.tr_bonus %}{{ top.tr_bonus }}{% else %}BONUS{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<img class="game-block__icon " src="/media/img/gift.png" data-src="/media/img/gift.png" alt="gift" />
+														</a>
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																{{ top.country.currency.symbol }} {{ casinoBox.0.bonus_limit }}
+															</h3>
+														</a>
+													</div>
+												</div>
+											{% endif %}
+										{% endif %}
+									{% else %}
+										{% if casinoBox.0.fs %}
+											{% if casinoBox.0.cashback %}
+												<div class="fs light col-6">
+													<div class="title desk-title">
+														{% if top.tr_fs %}{{ top.tr_fs }}{% else %}FREE SPIN{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<img src="/media/img/repeat.png" data-src="/media/img/repeat.png" alt="gift" />
+														</a>
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																{{ casinoBox.0.fs }} FS
+															</h3>
+														</a>
+													</div>
+												</div>
+												<div class="cashback light col-6">
+													<div class="title desk-title">
+														{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<img class="game-block__icon " src="/media/img/cashback.png" data-src="/media/img/cashback.png" alt="cashback" />
+														</a>
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																{{ casinoBox.0.cashback }}%
+															</h3>
+														</a>
+													</div>
+												</div>
+											{% else %}
+												<div class="fs light col-12">
+													<div class="title desk-title">
+														{% if top.tr_fs %}{{ top.tr_fs }}{% else %}FREE SPIN{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<img src="/media/img/repeat.png" data-src="/media/img/repeat.png" alt="gift" />
+														</a>
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																{{ casinoBox.0.fs }} FS
+															</h3>
+														</a>
+													</div>
+												</div>
+											{% endif %}
+										{% else %}
+											{% if casinoBox.0.cashback %}
+												<div class="cashback light col-12">
+													<div class="title desk-title">
+														{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<img class="game-block__icon " src="/media/img/cashback.png" data-src="/media/img/cashback.png" alt="cashback" />
+														</a>
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																{{ casinoBox.0.cashback }}%
+															</h3>
+														</a>
+													</div>
+												</div>
+											{% else %}
+												<div class="cashback light col-12">
+													<div class="title desk-title">
+														{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+													</div>
+													<div class="data">
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<img class="game-block__icon " src="/media/img/cashback.png" data-src="/media/img/cashback.png" alt="cashback" />
+														</a>
+														<a href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+															<h3>
+																10%
+															</h3>
+														</a>
+													</div>
+												</div>
+											{% endif %}
+										{% endif %}
+									{% endif %}
+								{% endif %}
+								</div><!--Row-->
+							</div>
+							<div class="col-12 col-lg-8">
+								<div class="row">
+									<div class="block-info light col-lg-12">
+										<div class="title">
+											{% if top.tr_info %}{{ top.tr_info }}{% else %}STRENGTHS{% endif %}
+										</div>
+										<div class="data">
+											<ul class="texts">
+												{% if casinoBox.1 %}
+													{% if casinoBox.1.adv1 %}<li>{{ casinoBox.1.adv1 }}</li>{% endif %}
+													{% if casinoBox.1.adv2 %}<li>{{ casinoBox.1.adv2 }}</li>{% endif %}
+													{% if casinoBox.1.adv3 %}<li>{{ casinoBox.1.adv3 }}</li>{% endif %}
+												{% else %}
+													{% if casinoBox.0.adv1 %}<li>{{ casinoBox.0.adv1 }}</li>{% endif %}
+													{% if casinoBox.0.adv2 %}<li>{{ casinoBox.0.adv2 }}</li>{% endif %}
+													{% if casinoBox.0.adv3 %}<li>{{ casinoBox.0.adv3 }}</li>{% endif %}
+												{% endif %}
+											</ul>
+										</div>
+									</div>
+									<div class="p-logos col-12">
+										<div class="title light">
+											{% if top.tr_pay %}{{ top.tr_pay }}{% else %}PAYMENT SYSTEMS{% endif %}
+										</div>
+										<div class="data">
+										{% if casinoBox.1 %}
+											<ul class="anime_{{ casinoBox.1.id }} anime">
+												<style type="text/css">
+													@keyframes marquee_anime_{{ casinoBox.1.id }} {
+														0% {
+															transform: translateX(-4%);
+														}
+														50% {
+															transform: translateX(-{{ casinoBox.2|length|mul:41 }}px);
+														}
+														100% {
+															transform: translateX(-4%);
+														}
+													}
+													.anime_{{ casinoBox.1.id }}{
+															-moz-animation: marquee_anime_{{ casinoBox.1.id }} 10s linear infinite;
+																  -webkit-animation: marquee_anime_{{ casinoBox.1.id }} 10s linear infinite;
+																  animation: marquee_anime_{{ casinoBox.1.id }} 10s linear infinite;
+															position: absolute;
+															display: flex;
+														}
+												</style>
+												{% for pay in casinoBox.2 %}
+													<li>
+														<a class="" href="{{ casinoBox.1.url }}" target="_blank">
+															<img class="bank-img" src="{{ pay.payment.logo.lazy_logo_mini.url }}" data-src="{{ pay.payment.logo.site_logo_mini.url }}" title="{{ pay.name }}" alt="{{ pay.name }}" />
+														</a>
+													</li>
+												{% endfor %}
+										{% else %}
+											<ul class="anime_{{ casinoBox.0.id }} anime">
+												<style type="text/css">
+													@keyframes marquee_anime_{{ casinoBox.0.id }} {
+														0% {
+															transform: translateX(-4%);
+														}
+														50% {
+															transform: translateX(-{{ casinoBox.2|length|mul:41 }}px);
+														}
+														100% {
+															transform: translateX(-4%);
+														}
+													}
+													.anime_{{ casinoBox.0.id }}{
+															-moz-animation: marquee_anime_{{ casinoBox.0.id }} 10s linear infinite;
+																  -webkit-animation: marquee_anime_{{ casinoBox.0.id }} 10s linear infinite;
+																  animation: marquee_anime_{{ casinoBox.0.id }} 10s linear infinite;
+															position: absolute;
+															display: flex;
+														}
+												</style>
+												{% for pay in casinoBox.2 %}
+													<li>
+														<a class="" href="{{ casinoBox.0.url }}" target="_blank">
+															<img class="bank-img" src="{{ pay.payment.logo.lazy_logo_mini.url }}" data-src="{{ pay.payment.logo.site_logo_mini.url }}" title="{{ pay.name }}" alt="{{ pay.name }}" />
+														</a>
+													</li>
+												{% endfor %}
+										{% endif %}
+												
+											</ul>
+										</div>
+									</div>
+									<div class="buttons col-12">
+											<a class="play-button light-box light" href="{% if casinoBox.1 %}{{ casinoBox.1.url }}{% else %}{{ casinoBox.0.url }}{% endif %}" target="_blank" rel="noreferrer">
+												{% if top.tr_play %}{{ top.tr_play }}{% else %}CLAIM BONUS{% endif %}
+											</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div><!--block-info-->
+				</div><!--ROW-->
+			</div><!--block-WRAPPER-->
+		</div><!--CONTAINER-->
+	{% endfor %}
+{% endblock %}
+
+{% if top.tr_copy %}{{ top.tr_copy }}{% else %}{% endif %}

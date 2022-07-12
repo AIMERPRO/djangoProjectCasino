@@ -1,0 +1,32 @@
+{% extends './base.html' %}
+{% block title %}{{currency.name}}{% endblock %}
+{% block content %}
+	<div class="row">
+		<div class="box">
+			<h2 class="casinoadmin-title">{{currency.name}}</h2>
+			<h3 class="error">{{ccsError}}</h3>
+			<h3 class="error">{{linkError}}</h3>
+			<div class="box-item">
+				{% if currency.id and currency.logo%}
+				<div class="casinoadmin-logobox">
+					<div class="casinoadmin-logo">
+						<img src="{{currency.logo.url}}" alt="{{currency.name}} LOGO">
+					</div>
+				</div>
+				{% endif %}
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					{{formMain.as_p}}
+					<input type="text" name="form" value="main" hidden>
+					<div class="btn-box">
+						<input class="btn" type="submit" value="save">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+</body>
+
+</html>

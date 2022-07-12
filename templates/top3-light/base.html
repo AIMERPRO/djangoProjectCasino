@@ -1,0 +1,59 @@
+{% load pwa %}
+{% load mathfilters %}
+<!doctype html>
+<html lang="{% block lang %}en{% endblock %}">
+<head>
+	<meta charset="utf-8">
+
+	<title>Top 10 Online Casinos</title>
+	<link rel="preload" as="image" href="{{ top.bg_img.bg_mob.url }}">
+	
+	<meta name="description" content="">
+
+	<link rel="shortcut icon" href="{% if top.favicon %} {{ top.favicon.url }} {% else %} /media/favicons/favicon.ico {% endif %}" type="image/x-icon">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	
+	<link rel="stylesheet" href="/media/css/fonts.css">
+	<link rel="stylesheet" href="/media/css/bootstrap.min.css">
+	
+	{% progressive_web_app_meta %}
+
+	<style type="text/css">
+    </style>
+
+    <link rel="stylesheet" href="/media/css/top3/main-min.css">
+
+    <script src="/media/js/lazyload.js"></script>
+</head>
+<body class="light">
+{% block header %}
+{% endblock %}
+
+<section class="items">
+    <div class="items__container container">
+     <div class="items__wrapper">
+        <div class="row">
+          <ul class="items__list">
+              {% block content %}
+              {% endblock %}
+          </ul>
+        </div>
+     </div>
+    </div>
+</section>
+
+{% block footer %}
+{% endblock %}
+
+{% include 'metrika.html' %}
+
+    <script src="/media/js/top3/modules/add-class-for-scroll.js"></script>
+    <script src="/media/js/top3/modules/dynamic-adaptive.js"></script>
+    <script src="/media/js/top3/modules/text.js"></script>
+    <script src="/media/js/top3/modules/webp.js"></script>
+    <script src="/media/js/top3/modules/rating.js"></script>
+
+</body>
+</html>

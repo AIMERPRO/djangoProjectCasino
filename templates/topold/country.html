@@ -1,0 +1,517 @@
+{% extends "topold/base.html" %}
+{% load thumbnail %}
+
+{% block content %}
+	{% for casinoBox in casino_list %}				
+		<div data-casino-name="{{casinoBox.0.name}}" class="games_container col-lg-10 col-md-11 col-sm-12 col-12 p-0">
+			<div class="game-card-wrapper 
+			{% if forloop.counter == 1 %}
+				game-card__img-gold-crown
+			{% elif forloop.counter == 2 %}
+				game-card__img-silver-crown
+			{% elif forloop.counter == 3 %}
+				game-card__img-bronze-crown
+			{% endif %}">
+			
+				<div class="game-card">
+				<!-- LOGO -->
+					<div class="game-card__section game-card__section-img">
+						<div class="game-card__img">
+							<a class="link" style="background-image: url('/media/topold/img/bg/{{casinoBox.0.bg}}');" href="{% if casinoBox.1 %}{{ casinoBox.1.url }}{% else %}{{ casinoBox.0.url }}{% endif %}" target="_blank" rel="noreferrer">
+								<img class="" src="{{ casinoBox.0.logo|thumbnail_url:'site_logo' }}" alt="{{ casinoBox.0.name }}" />
+							</a>
+						</div>
+						<div class="game-card__block-star">
+							<img class="game-card__star " src="/media/topold/img_home/star.svg" alt="img">
+							<img class="game-card__star " src="/media/topold/img_home/star.svg" alt="img">
+							<img class="game-card__star " src="/media/topold/img_home/star.svg" alt="img">
+							<img class="game-card__star " src="/media/topold/img_home/star.svg" alt="img">
+							<img class="game-card__star " src="/media/topold/img_home/star.svg" alt="img">
+						</div>
+					</div>
+				<!-- BONUS FS CASHBACK -->
+
+					<div class="game-card__section game-card__section--d-flex">
+						{% if casinoBox.1 %}
+							{% if casinoBox.1.limit %}
+								{% if casinoBox.1.fs %}
+									<!-- BONUS -->
+									<div class="game-card__block game-card__block--border-right">
+										<div class="game-card__title-block game-card__title-block-468  game-card__title-block--first">
+											<p class="game-card__title">
+												{% if top.tr_bonus %}{{ top.tr_bonus }}{% else %}BONUS{% endif %}
+											</p>
+										</div>
+										<div class="game-card__bonusbox">
+											<a  class="link" data-id-link="{{casinoBox.0.id}}" href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+												<img class="game-card__icon " src="/media/topold/img_home/gift.svg" alt="gift" />
+											</a>
+											<a  class="link" data-id-link="{{casinoBox.0.id}}" href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+												<h3 class="game-card__green-text">
+													{{ casinoBox.1.bonus_limit }} {{ top.country.currency.symbol }}
+												</h3>
+											</a>
+										</div>
+									</div>
+									<!-- FREE SPIN -->
+									<div class="game-card__block">
+										<div class="game-card__title-block game-card__title-block-468 game-card__title-block--768">
+											<p class="game-card__title">
+												{% if top.tr_fs %}{{ top.tr_fs }}{% else %}FREE SPIN{% endif %}
+											</p>
+										</div>
+										<div class="game-card__bonusbox">
+											<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+											<img class="game-card__icon " src="/media/topold/img_home/repeat.svg" alt="repeat" />
+											</a>
+											<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+											<h3 class="game-card__green-text">
+												{{ casinoBox.1.fs }} FS
+											</h3>
+											</a>
+										</div>						
+									</div>
+								{% else %}
+									{% if casinoBox.1.cashback %}
+										<!-- BONUS -->
+										<div class="game-card__block game-card__block--border-right">
+											<div class="game-card__title-block game-card__title-block-468  game-card__title-block--first">
+												<p class="game-card__title">
+													{% if top.tr_bonus %}{{ top.tr_bonus }}{% else %}BONUS{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a  class="link" data-id-link="{{casinoBox.0.id}}" href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+													<img class="game-card__icon " src="/media/topold/img_home/gift.svg" alt="gift" />
+												</a>
+												<a  class="link" data-id-link="{{casinoBox.0.id}}" href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+													<h3 class="game-card__green-text">
+														{{ casinoBox.1.bonus_limit }} {{ top.country.currency.symbol }}
+													</h3>
+												</a>
+											</div>
+										</div>
+										<!-- CASHBACK -->
+										<div class="game-card__block ">
+											<div class="game-card__title-block game-card__title-block-468  game-card__title-block--first">
+												<p class="game-card__title">
+													{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+													<img class="game-card__icon_cashback" src="/media/topold/img_home/cashback.png" alt="gift" />
+												</a>
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+													<h3 class="game-card__green-text">{{ casinoBox.1.cashback }}%
+													</h3>
+												</a>
+											</div>
+										</div>
+									{% else %}
+										<!-- BONUS -->
+										<div class="game-card__block ">
+											<div class="game-card__title-block game-card__title-block-468  game-card__title-block--first">
+												<p class="game-card__title">
+													{% if top.tr_bonus %}{{ top.tr_bonus }}{% else %}BONUS{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a  class="link" data-id-link="{{casinoBox.0.id}}" href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+													<img class="game-card__icon " src="/media/topold/img_home/gift.svg" alt="gift" />
+												</a>
+												<a  class="link" data-id-link="{{casinoBox.0.id}}" href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+													<h3 class="game-card__green-text">
+														{{ casinoBox.1.bonus_limit }} {{ top.country.currency.symbol }}
+													</h3>
+												</a>
+											</div>
+										</div>
+									{% endif %}
+								{% endif %}
+							{% else %}
+								{% if casinoBox.1.fs %}
+									{% if casinoBox.1.cashback %}
+										<!-- FREE SPIN -->
+										<div class="game-card__block game-card__block--border-right">
+											<div class="game-card__title-block game-card__title-block-468 game-card__title-block--768">
+												<p class="game-card__title">
+													{% if top.tr_fs %}{{ top.tr_fs }}{% else %}FREE SPIN{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+												<img class="game-card__icon " src="/media/topold/img_home/repeat.svg" alt="repeat" />
+												</a>
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+												<h3 class="game-card__green-text">
+													{{ casinoBox.1.fs }} FS
+												</h3>
+												</a>
+											</div>						
+										</div>
+										<!-- CASHBACK -->
+										<div class="game-card__block">
+											<div class="game-card__title-block game-card__title-block-468  game-card__title-block--first">
+												<p class="game-card__title">
+													{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+													<img class="game-card__icon_cashback" src="/media/topold/img_home/cashback.png" alt="gift" />
+												</a>
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+													<h3 class="game-card__green-text">{{ casinoBox.1.cashback }}%
+													</h3>
+												</a>
+											</div>
+										</div>
+									{% else %}
+										<!-- FREE SPIN -->
+										<div class="game-card__block">
+											<div class="game-card__title-block game-card__title-block-468 game-card__title-block--768">
+												<p class="game-card__title">
+													{% if top.tr_fs %}{{ top.tr_fs }}{% else %}FREE SPIN{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+												<img class="game-card__icon " src="/media/topold/img_home/repeat.svg" alt="repeat" />
+												</a>
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+												<h3 class="game-card__green-text">
+													{{ casinoBox.1.fs }} FS
+												</h3>
+												</a>
+											</div>						
+										</div>
+									{% endif %}
+								{% else %}
+									{% if casinoBox.1.cashback %}
+										<!-- CASHBACK -->
+										<div class="game-card__block">
+											<div class="game-card__title-block game-card__title-block-468  game-card__title-block--first">
+												<p class="game-card__title">
+													{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+													<img class="game-card__icon_cashback" src="/media/topold/img_home/cashback.png" alt="gift" />
+												</a>
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+													<h3 class="game-card__green-text">{{ casinoBox.1.cashback }}%
+													</h3>
+												</a>
+											</div>
+										</div>
+									{% else %}
+										<!-- CASHBACK -->
+										<div class="game-card__block">
+											<div class="game-card__title-block game-card__title-block-468  game-card__title-block--first">
+												<p class="game-card__title">
+													{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+													<img class="game-card__icon_cashback" src="/media/topold/img_home/cashback.png" alt="gift" />
+												</a>
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.1.url }}" target="_blank" rel="noreferrer">
+													<h3 class="game-card__green-text"> 10%
+													</h3>
+												</a>
+											</div>
+										</div>
+									{% endif %}
+								{% endif %}
+							{% endif %}
+						{% else %}
+							{% if casinoBox.0.limit %}
+								{% if casinoBox.0.fs %}
+									<!-- BONUS -->
+									<div class="game-card__block game-card__block--border-right">
+										<div class="game-card__title-block game-card__title-block-468  game-card__title-block--first">
+											<p class="game-card__title">
+												{% if top.tr_bonus %}{{ top.tr_bonus }}{% else %}BONUS{% endif %}
+											</p>
+										</div>
+										<div class="game-card__bonusbox">
+											<a  class="link" data-id-link="{{casinoBox.0.id}}" href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+												<img class="game-card__icon " src="/media/topold/img_home/gift.svg" alt="gift" />
+											</a>
+											<a  class="link" data-id-link="{{casinoBox.0.id}}" href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+												<h3 class="game-card__green-text">
+													{{ casinoBox.0.bonus_limit }} {{ top.country.currency.symbol }}
+												</h3>
+											</a>
+										</div>
+									</div>
+									<!-- FREE SPIN -->
+									<div class="game-card__block">
+										<div class="game-card__title-block game-card__title-block-468 game-card__title-block--768">
+											<p class="game-card__title">
+												{% if top.tr_fs %}{{ top.tr_fs }}{% else %}FREE SPIN{% endif %}
+											</p>
+										</div>
+										<div class="game-card__bonusbox">
+											<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+											<img class="game-card__icon " src="/media/topold/img_home/repeat.svg" alt="repeat" />
+											</a>
+											<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+											<h3 class="game-card__green-text">
+												{{ casinoBox.0.fs }} FS
+											</h3>
+											</a>
+										</div>						
+									</div>
+								{% else %}
+									{% if casinoBox.1.cashback %}
+										<!-- BONUS -->
+										<div class="game-card__block game-card__block--border-right">
+											<div class="game-card__title-block game-card__title-block-468  game-card__title-block--first">
+												<p class="game-card__title">
+													{% if top.tr_bonus %}{{ top.tr_bonus }}{% else %}BONUS{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a  class="link" data-id-link="{{casinoBox.0.id}}" href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+													<img class="game-card__icon " src="/media/topold/img_home/gift.svg" alt="gift" />
+												</a>
+												<a  class="link" data-id-link="{{casinoBox.0.id}}" href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+													<h3 class="game-card__green-text">
+														{{ casinoBox.0.bonus_limit }} {{ top.country.currency.symbol }}
+													</h3>
+												</a>
+											</div>
+										</div>
+										<!-- CASHBACK -->
+										<div class="game-card__block">
+											<div class="game-card__title-block game-card__title-block-468  game-card__title-block--first">
+												<p class="game-card__title">
+													{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+													<img class="game-card__icon_cashback" src="/media/topold/img_home/cashback.png" alt="gift" />
+												</a>
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+													<h3 class="game-card__green-text"> {{ casinoBox.0.cashback }} %
+													</h3>
+												</a>
+											</div>
+										</div>
+									{% else %}
+										<!-- FREE SPIN -->
+										<div class="game-card__block">
+											<div class="game-card__title-block game-card__title-block-468 game-card__title-block--768">
+												<p class="game-card__title">
+													{% if top.tr_fs %}{{ top.tr_fs }}{% else %}FREE SPIN{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+												<img class="game-card__icon " src="/media/topold/img_home/repeat.svg" alt="repeat" />
+												</a>
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+												<h3 class="game-card__green-text">
+													{{ casinoBox.0.fs }} FS
+												</h3>
+												</a>
+											</div>
+										</div>
+									{% endif %}
+								{% endif %}
+							{% else %}
+								{% if casinoBox.1.fs %}
+									{% if casinoBox.1.cashback %}
+										<!-- FREE SPIN -->
+										<div class="game-card__block game-card__block--border-right">
+											<div class="game-card__title-block game-card__title-block-468 game-card__title-block--768">
+												<p class="game-card__title">
+													{% if top.tr_fs %}{{ top.tr_fs }}{% else %}FREE SPIN{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+												<img class="game-card__icon " src="/media/topold/img_home/repeat.svg" alt="repeat" />
+												</a>
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+												<h3 class="game-card__green-text">
+													{{ casinoBox.0.fs }} FS
+												</h3>
+												</a>
+											</div>						
+										</div>
+										<!-- CASHBACK -->
+										<div class="game-card__block">
+											<div class="game-card__title-block game-card__title-block-468  game-card__title-block--first">
+												<p class="game-card__title">
+													{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+													<img class="game-card__icon_cashback" src="/media/topold/img_home/cashback.png" alt="gift" />
+												</a>
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+													<h3 class="game-card__green-text"> {{ casinoBox.0.cashback }} %
+													</h3>
+												</a>
+											</div>
+										</div>
+									{% else %}
+										<!-- FREE SPIN -->
+										<div class="game-card__block">
+											<div class="game-card__title-block game-card__title-block-468 game-card__title-block--768">
+												<p class="game-card__title">
+													{% if top.tr_fs %}{{ top.tr_fs }}{% else %}FREE SPIN{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+												<img class="game-card__icon " src="/media/topold/img_home/repeat.svg" alt="repeat" />
+												</a>
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+												<h3 class="game-card__green-text">
+													{{ casinoBox.0.fs }} FS
+												</h3>
+												</a>
+											</div>						
+										</div>
+									{% endif %}
+								{% else %}
+									{% if casinoBox.1.cashback %}
+										<!-- CASHBACK -->
+										<div class="game-card__block">
+											<div class="game-card__title-block game-card__title-block-468  game-card__title-block--first">
+												<p class="game-card__title">
+													{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+													<img class="game-card__icon_cashback" src="/media/topold/img_home/cashback.png" alt="gift" />
+												</a>
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+													<h3 class="game-card__green-text"> {{ casinoBox.0.cashback }} %
+													</h3>
+												</a>
+											</div>
+										</div>
+									{% else %}
+										<!-- CASHBACK -->
+										<div class="game-card__block">
+											<div class="game-card__title-block game-card__title-block-468  game-card__title-block--first">
+												<p class="game-card__title">
+													{% if top.tr_cashback %}{{ top.tr_cashback }}{% else %}CASHBACK{% endif %}
+												</p>
+											</div>
+											<div class="game-card__bonusbox">
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+													<img class="game-card__icon_cashback" src="/media/topold/img_home/cashback.png" alt="gift" />
+												</a>
+												<a class="link" data-id-link="{{casinoBox.0.id}}"  href="{{ casinoBox.0.url }}" target="_blank" rel="noreferrer">
+													<h3 class="game-card__green-text"> 10 %
+													</h3>
+												</a>
+											</div>
+										</div>
+									{% endif %}
+								{% endif %}
+							{% endif %}
+						{% endif %}
+
+					</div>
+
+				<!-- INFO -->
+					<div class="game-card__section">
+						<div class="game-card__block game-card__block-with-list">
+							<div class="game-card__title-block  game-card__title-block-768">
+								<p class="game-card__title ">
+									{% if top.tr_info %}{{ top.tr_info }}{% else %}INFO{% endif %}
+								</p>
+							</div>
+							<ul class="game-card__list game-card__list--dnone">
+							{% if casinoBox.1 %}
+								{% if casinoBox.1.adv1 %}<li>{{ casinoBox.1.adv1 }}</li>{% endif %}
+								{% if casinoBox.1.adv2 %}<li>{{ casinoBox.1.adv2 }}</li>{% endif %}
+								{% if casinoBox.1.adv3 %}<li>{{ casinoBox.1.adv3 }}</li>{% endif %}
+							{% else %}
+								{% if casinoBox.0.adv1 %}<li>{{ casinoBox.0.adv1 }}</li>{% endif %}
+								{% if casinoBox.0.adv2 %}<li>{{ casinoBox.0.adv2 }}</li>{% endif %}
+								{% if casinoBox.0.adv3 %}<li>{{ casinoBox.0.adv3 }}</li>{% endif %}
+							{% endif %}
+							</ul>
+				<!-- MIN DEP LICENSE -->
+							<div class="game-card__subtitle-block">
+								<p class="game-card__subtitle game-card__subtitle--first">
+									{% if top.tr_md %}{{ top.tr_md }}{% else %}Min Dep{% endif %} <span>{{ top.country.currency.symbol }}
+										{% if casinoBox.1 %}
+											{{ casinoBox.1.min_dep }}
+										{% else %}
+											{{ casinoBox.0.min_dep }}
+										{% endif %}
+									</span>
+								</p>
+								<p class="game-card__subtitle">
+									{% if top.tr_license %}{{ top.tr_license }}{% else %}License{% endif %}
+								</p>
+								<div class="game-card__subtitle-imgbox">
+									<img src="/media/topold/img/license/{{ casinoBox.0.license }}.png" class=""/>
+								</div>
+							</div>
+						</div>
+					</div>
+				<!-- PAYMENTS -->
+					<div class="game-card__section">
+						<div class="game-card__block game-card__block-with-list">
+							<div class="game-card__title-block game-card__title-block-768 game-card__title-block--last">
+								<p class="game-card__title">
+									{% if top.tr_pay %}{{ top.tr_pay }}{% else %}PAYMENT SYSTEMS{% endif %}
+								</p>
+							</div>
+							<div class="game-card__block-banks game-card__block-468">
+								<div class="mspa">
+									{% for pay in casinoBox.2 %}
+											<a class="link" data-id-link="{{casinoBox.0.id}}"  href="#">
+												<img class="game-card__bank-img " src="{{ pay.payment.logo.url }}" title="{{ pay.payment.name }}" alt="{{ pay.payment.name }}" />
+											</a>
+									{% endfor %}
+								</div>
+				<!-- INFO in mobile -->
+								<ul class="game-card__list game-card__list--respons">
+								{% if casinoBox.1 %}
+									{% if casinoBox.1.adv1 %}<li>{{ casinoBox.1.adv1 }}</li>{% endif %}
+									{% if casinoBox.1.adv2 %}<li>{{ casinoBox.1.adv2 }}</li>{% endif %}
+									{% if casinoBox.1.adv3 %}<li>{{ casinoBox.1.adv3 }}</li>{% endif %}
+								{% else %}
+									{% if casinoBox.0.adv1 %}<li>{{ casinoBox.0.adv1 }}</li>{% endif %}
+									{% if casinoBox.0.adv2 %}<li>{{ casinoBox.0.adv2 }}</li>{% endif %}
+									{% if casinoBox.0.adv3 %}<li>{{ casinoBox.0.adv3 }}</li>{% endif %}
+								{% endif %}
+								</ul>
+								<!-- <div class="game-card__arrow-bottom" onclick="hideShow()">
+									<img src="/media/topold/img_home/arrow.svg" alt="img" class="game-card__arrow-img">
+								</div> -->
+
+							</div>
+				<!-- BUTTON -->
+							<div class="game-card__block-button game-card__block-button--468">
+								<a data-id-link="{{casinoBox.0.id}}"  class="game-card__button link" href="{% if casinoBox.1 %}{{ casinoBox.1.url }}{% else %}{{ casinoBox.0.url }}{% endif %}" target="_blank" rel="noreferrer">
+									{% if top.tr_play %} {{top.tr_play}} {% else %} PLAY NOW{% endif %}
+								</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			
+		</div>	
+	{% endfor %}							
+{% endblock %}
+
+{% block copy %}All Rights Reserved{% endblock %}
